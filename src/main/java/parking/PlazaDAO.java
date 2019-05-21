@@ -46,8 +46,8 @@ public class PlazaDAO {
             // si existe esa pk
             if (res.first()) {
                 
-                //plaza.setFechaEntrada(res.get);
-                //plaza.setFechaSalida(res.get);
+                plaza.setFechaEntrada(res.getDate("fechaEntrada").toLocalDate());
+                plaza.setFechaSalida(res.getDate("fechaSalida").toLocalDate());
                 plaza.setNumeroPlaza(res.getString("numeroPlaza"));
                 plaza.setTarifa(res.getDouble("tarifa"));
                 plaza.setTipoPlaza(res.getString("tipoPlaza"));
@@ -76,8 +76,8 @@ public class PlazaDAO {
 
                 
                 
-                //prest.setDate(1, Date.valueOf(plaza.getFechaEntrada()));
-                //prest.setDate(2, Date.valueOf(plaza.getFechaSalida()));
+                prest.setDate(1, Date.valueOf(plaza.getFechaEntrada()));
+                prest.setDate(2, Date.valueOf(plaza.getFechaSalida()));
                 prest.setString(3, plaza.getNumeroPlaza());
                 prest.setDouble(4, plaza.getTarifa());
                 prest.setString(5, plaza.getTipoPlaza());
@@ -132,8 +132,8 @@ public class PlazaDAO {
 
                 // Establecemos los parámetros de la sentencia
                 
-                //prest.setDate(1, Date.valueOf(plaza.getFechaEntrada()));
-                //prest.setDate(2, Date.valueOf(plaza.getFechaSalida()));
+                prest.setDate(1, Date.valueOf(plaza.getFechaEntrada()));
+                prest.setDate(2, Date.valueOf(plaza.getFechaSalida()));
                 prest.setString(3, plaza.getNumeroPlaza());
                 prest.setDouble(4, plaza.getTarifa());
                 prest.setString(5, plaza.getTipoPlaza());
