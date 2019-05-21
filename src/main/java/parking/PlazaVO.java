@@ -5,7 +5,7 @@
  */
 package parking;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
  */
 public class PlazaVO {
     
-    private LocalDateTime fechaEntrada;
-    private LocalDateTime fechaSalida;
+    private LocalDate fechaEntrada;
+    private LocalDate fechaSalida;
     private String numeroPlaza;
     private double tarifa;
     private String tipoPlaza;
@@ -22,7 +22,8 @@ public class PlazaVO {
     private double precioMinuto;
 
     //constructor parametrizado
-    public PlazaVO(LocalDateTime fechaEntrada, LocalDateTime fechaSalida, String numeroPlaza, double tarifa, String tipoPlaza, String estado, double precioMinuto) {
+
+    public PlazaVO(LocalDate fechaEntrada, LocalDate fechaSalida, String numeroPlaza, double tarifa, String tipoPlaza, String estado, double precioMinuto) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.numeroPlaza = numeroPlaza;
@@ -31,23 +32,24 @@ public class PlazaVO {
         this.estado = estado;
         this.precioMinuto = precioMinuto;
     }
+    
 
     public PlazaVO() {
     }
 
-    public LocalDateTime getFechaEntrada() {
+    public LocalDate getFechaEntrada() {
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(LocalDateTime fechaEntrada) {
+    public void setFechaEntrada(LocalDate fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
 
-    public LocalDateTime getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(LocalDateTime fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
@@ -95,6 +97,6 @@ public class PlazaVO {
     public String toString() {
         return "PlazaVO{" + "fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", numeroPlaza=" + numeroPlaza + ", tarifa=" + tarifa + ", tipoPlaza=" + tipoPlaza + ", estado=" + estado + ", precioMinuto=" + precioMinuto + '}';
     }
-    
-    
+
+      
 }
