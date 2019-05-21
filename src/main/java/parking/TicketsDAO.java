@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import conexion.Conexion;
+import java.sql.Date;
 
 /**
  *
@@ -63,7 +64,10 @@ public class TicketsDAO {
 
             if (res.first()) {
  
-                //ticket.setFecha(res.getDate("fecha").toLocalDate());
+                ticket.setFechaEntrada(res.getDate("fechaEntrada").toLocalDate());
+                ticket.setFechaSalida(res.getDate("fechaSalida").toLocalDate());
+                ticket.setHoraEntrada(res.getTime("horaEntrada").toLocalTime());
+                ticket.setHoraSalida(res.getTime("horaSalida").toLocalTime());
                 ticket.setPrecio(res.getString("precio"));
                 ticket.setPin(res.getInt("pin"));
                 ticket.setMatricula("matricula");
@@ -77,7 +81,7 @@ public class TicketsDAO {
     public int insertTickets(TicketsVO ticket) throws SQLException {
 
         int numFilas = 0;
-        String sql = "insert into tickets values (?,?,?,?)";
+        String sql = "insert into tickets values (?,?,?,?,?,?,?)";
 
         if (buscarTickets(ticket.getMatricula()) != null) {
             
@@ -87,10 +91,13 @@ public class TicketsDAO {
             // de datos. Sentencia parametrizada
             try (PreparedStatement prest = con.prepareStatement(sql)) {
 
-                //prest.setDate(2, ticket.getDate().toLocalDate());
-                prest.setString(3, ticket.getPrecio());
-                prest.setInt(4, ticket.getPin());
-                prest.setString(5, ticket.getMatricula());                            
+                prest.setDate(2, Date.valueOf(ticket.getFechaEntrada()));
+                prest.setDate(3, Date.valueOf(ticket.getFechaSalida()));
+                prest.setTime(4, ticket.getTime().toLocalTime());
+                prest.setTime(5, ticket.getTime().toLocalTime());
+                prest.setString(6, ticket.getPrecio());
+                prest.setInt(7, ticket.getPin());
+                prest.setString(8, ticket.getMatricula());                            
 
                 numFilas = prest.executeUpdate();
             }
