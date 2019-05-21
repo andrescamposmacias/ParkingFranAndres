@@ -125,7 +125,7 @@ public class TicketsDAO {
         try (PreparedStatement prest = con.prepareStatement(sql)) {
 
             // Establecemos los parámetros de la sentencia
-            prest.setString(5, ticket.getMatricula());
+            prest.setString(8, ticket.getMatricula());
             // Ejecutamos la sentencia
             numFilas = prest.executeUpdate();
         }
@@ -135,7 +135,7 @@ public class TicketsDAO {
     public int updateTickets(String matricula, TicketsVO ticket) throws SQLException {
 
         int numFilas = 0;
-        String sql = "update plaza set fecha = ?, precio = ?, pin = ?, matricula = ? where matricula=?";
+        String sql = "update plaza set fechaEntrada = ?, fechaSalida = ?,horaEntrada = ?,horaSalida = ?, precio = ?, pin = ?, matricula = ? where matricula=?";
 
         if (buscarTickets(ticket.getMatricula()) == null) {
 
@@ -144,10 +144,13 @@ public class TicketsDAO {
 
             try (PreparedStatement prest = con.prepareStatement(sql)) {
 
-                //prest.setDate(2, Date.valueOf(ticket.getFecha()));
-                prest.setString(3, ticket.getPrecio());
-                prest.setInt(4, ticket.getPin());
-                prest.setString(5, ticket.getMatricula());                           
+                prest.setDate(2, Date.valueOf(ticket.getFechaEntrada()));
+                prest.setDate(3, Date.valueOf(ticket.getFechaSalida()));
+                prest.setTime(4, ticket.getTime().toLocalTime());
+                prest.setTime(5, ticket.getTime().toLocalTime());
+                prest.setString(6, ticket.getPrecio());
+                prest.setInt(7, ticket.getPin());
+                prest.setString(8, ticket.getMatricula());                          
 
                 numFilas = prest.executeUpdate();
             }
