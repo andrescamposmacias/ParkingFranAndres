@@ -5,21 +5,29 @@
  */
 package parking;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  *
  * @author andres
  */
 public class TicketsVO {
-    
-    private LocalDateTime fecha;
+
+    private LocalDate fechaEntrada;
+    private LocalDate fechaSalida;
+    private LocalTime horaEntrada;
+    private LocalTime horaSalida;
     private String precio;
     private int pin;
     private String matricula;
 
-    public TicketsVO(LocalDateTime fecha, String precio, int pin, String matricula) {
-        this.fecha = fecha;
+    public TicketsVO(LocalDate fechaEntrada, LocalDate fechaSalida, LocalTime horaEntrada, LocalTime horaSalida, String precio, int pin, String matricula) {
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
+        this.horaEntrada = horaEntrada;
+        this.horaSalida = horaSalida;
         this.precio = precio;
         this.pin = pin;
         this.matricula = matricula;
@@ -28,12 +36,36 @@ public class TicketsVO {
     public TicketsVO() {
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
+    public LocalDate getFechaEntrada() {
+        return fechaEntrada;
     }
 
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
+    public void setFechaEntrada(LocalDate fechaEntrada) {
+        this.fechaEntrada = fechaEntrada;
+    }
+
+    public LocalDate getFechaSalida() {
+        return fechaSalida;
+    }
+
+    public void setFechaSalida(LocalDate fechaSalida) {
+        this.fechaSalida = fechaSalida;
+    }
+
+    public LocalTime getHoraEntrada() {
+        return horaEntrada;
+    }
+
+    public void setHoraEntrada(LocalTime horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public LocalTime getHoraSalida() {
+        return horaSalida;
+    }
+
+    public void setHoraSalida(LocalTime horaSalida) {
+        this.horaSalida = horaSalida;
     }
 
     public String getPrecio() {
@@ -62,9 +94,7 @@ public class TicketsVO {
 
     @Override
     public String toString() {
-        return "TicketsVO{" + "fecha=" + fecha + ", precio=" + precio + ", pin=" + pin + ", matricula=" + matricula + '}';
+        return "TicketsVO{" + "fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", precio=" + precio + ", pin=" + pin + ", matricula=" + matricula + '}';
     }
-    
-    
-    
+
 }
