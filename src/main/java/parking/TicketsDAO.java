@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import conexion.Conexion;
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
 
 /**
  *
@@ -93,8 +95,8 @@ public class TicketsDAO {
 
                 prest.setDate(2, Date.valueOf(ticket.getFechaEntrada()));
                 prest.setDate(3, Date.valueOf(ticket.getFechaSalida()));
-                prest.setTime(4, ticket.getTime().toLocalTime());
-                prest.setTime(5, ticket.getTime().toLocalTime());
+                prest.setTime(4, Time.valueOf(ticket.getHoraEntrada()));
+                prest.setTime(5, Time.valueOf(ticket.getHoraSalida()));
                 prest.setString(6, ticket.getPrecio());
                 prest.setInt(7, ticket.getPin());
                 prest.setString(8, ticket.getMatricula());                            
@@ -146,8 +148,8 @@ public class TicketsDAO {
 
                 prest.setDate(2, Date.valueOf(ticket.getFechaEntrada()));
                 prest.setDate(3, Date.valueOf(ticket.getFechaSalida()));
-                prest.setTime(4, ticket.getTime().toLocalTime());
-                prest.setTime(5, ticket.getTime().toLocalTime());
+                prest.setTime(4, Time.valueOf(ticket.getHoraEntrada()));
+                prest.setTime(5, Time.valueOf(ticket.getHoraSalida()));
                 prest.setString(6, ticket.getPrecio());
                 prest.setInt(7, ticket.getPin());
                 prest.setString(8, ticket.getMatricula());                          
