@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package parking;
+package vehiculos;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -13,21 +13,45 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import conexion.Conexion;
-
+import java.util.ArrayList;
 
 /**
  *
  * @author fran
  */
-public class VehiculoDAO {
-    
+public class VehiculoDAO implements IVehiculo {
+
     private Connection con = null;
-     
-     public VehiculoDAO() {
+
+    public VehiculoDAO() {
         con = Conexion.getInstance();
     }
-     
     
+    @Override
+    public List<VehiculoVO> getAll() throws SQLException {
+        List<VehiculoVO> lista = new ArrayList<>();
+
+        // Preparamos la consulta de datos mediante un objeto Statement
+        // ya que no necesitamos parametrizar la sentencia SQL
+        try (Statement st = con.createStatement()) {
+            // Ejecutamos la sentencia y obtenemos las filas en el objeto ResultSet
+            ResultSet res = st.executeQuery("select * from vehiculo");
+            // Ahora construimos la lista, recorriendo el ResultSet y mapeando los datos
+            while (res.next()) {
+                VehiculoVO vehiculo = new VehiculoVO();
+                // Recogemos los datos de los jugadores, guardamos en un objeto
+                vehiculo.setMatricula(res.getString("matricula"));
+                vehiculo.setTipo(res.getString("tipo"));
+
+                //Añadimos el objeto a la lista
+                lista.add(vehiculo);
+            }
+        }
+
+        return lista;
+    }
+    
+    @Override
     public VehiculoVO findByMatricula(String matricula) throws SQLException {
 
         ResultSet res = null;
@@ -55,7 +79,7 @@ public class VehiculoDAO {
         }
     }
 
-   
+    @Override
     public int insertVehiculo(VehiculoVO vehiculo) throws SQLException {
 
         int numFilas = 0;
@@ -81,7 +105,7 @@ public class VehiculoDAO {
 
     }
 
-   
+    @Override
     public int insertVehiculo(List<VehiculoVO> lista) throws SQLException {
         int numFilas = 0;
 
@@ -92,7 +116,7 @@ public class VehiculoDAO {
         return numFilas;
     }
 
-    
+    @Override
     public int deleteVehiculo() throws SQLException {
 
         String sql = "delete from vehiculo";
@@ -111,7 +135,7 @@ public class VehiculoDAO {
 
     }
 
-  
+    @Override
     public int deleteVehiculo(VehiculoVO vehiculo) throws SQLException {
         int numFilas = 0;
 
@@ -128,7 +152,7 @@ public class VehiculoDAO {
         return numFilas;
     }
 
-
+    @Override
     public int updateVehiculo(String matricula, VehiculoVO nuevosDatos) throws SQLException {
 
         int numFilas = 0;
@@ -145,7 +169,6 @@ public class VehiculoDAO {
                 // Establecemos los parámetros de la sentencia          
                 prest.setString(1, nuevosDatos.getMatricula());
                 prest.setString(2, nuevosDatos.getTipo());
-                
 
                 numFilas = prest.executeUpdate();
             }
@@ -153,5 +176,3 @@ public class VehiculoDAO {
         }
     }
 }
-
-
