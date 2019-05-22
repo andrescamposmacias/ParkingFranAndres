@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package parking;
+package clientesSinAbono;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -115,7 +115,7 @@ public class ClienteSinAbonoDAO {
     }
 
   
-    public int deleteClienteSinAbono(ClienteSinAbonoVO clienteSniAbono) throws SQLException {
+    public int deleteClienteSinAbono(ClienteSinAbonoVO clienteSinAbono) throws SQLException {
         int numFilas = 0;
 
         String sql = "delete from clienteSniAbono where matricula = ?";
@@ -124,7 +124,7 @@ public class ClienteSinAbonoDAO {
         try (PreparedStatement prest = con.prepareStatement(sql)) {
 
             // Establecemos los parámetros de la sentencia
-            prest.setString(1, clienteSniAbono.getMatricula());
+            prest.setString(1, clienteSinAbono.getMatricula());
             // Ejecutamos la sentencia
             numFilas = prest.executeUpdate();
         }
