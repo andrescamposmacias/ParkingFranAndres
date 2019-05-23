@@ -125,10 +125,10 @@ public class ClienteDAO implements ICliente{
     }
      
      @Override
-     public int updateCliente(int dni, ClientesVO cliente) throws SQLException {
+     public int updateCliente(String dni, ClientesVO cliente) throws SQLException {
          
         int numFilas = 0;
-        String sql = "update clientes set dni = ?, matricula = ?, tarjetaCredito = ?, nombre = ?, apellido = ?, abono = ?, email = ?, fechaInicio = ?, fechaFin=?, numeroPlaza=?, coste=? where dni=?";
+        String sql = "update clientes set dni=?, matricula=?, tarjetaCredito=?, nombre=?, apellido=?, abono=?, email=?, fechaInicio=?, fechaFin=?, numeroPlaza=?, coste=? where dni=?";
 
         if (buscarDni(cliente.getDni()) == null) {
 
@@ -148,6 +148,7 @@ public class ClienteDAO implements ICliente{
                 prest.setDate(9, Date.valueOf(cliente.getFechaFin()));
                 prest.setString(10, cliente.getNumeroPlaza());
                 prest.setDouble(11, cliente.getCoste());
+                prest.setString(12, dni);
 
                 numFilas = prest.executeUpdate();
             }
