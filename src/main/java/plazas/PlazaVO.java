@@ -13,8 +13,6 @@ import java.time.LocalDate;
  */
 public class PlazaVO {
     
-    private LocalDate fechaEntrada;
-    private LocalDate fechaSalida;
     private String numeroPlaza;
     private double tarifa;
     private String tipoPlaza;
@@ -23,9 +21,7 @@ public class PlazaVO {
 
     //constructor parametrizado
 
-    public PlazaVO(LocalDate fechaEntrada, LocalDate fechaSalida, String numeroPlaza, double tarifa, String tipoPlaza, String estado, double precioMinuto) {
-        this.fechaEntrada = fechaEntrada;
-        this.fechaSalida = fechaSalida;
+    public PlazaVO(String numeroPlaza, double tarifa, String tipoPlaza, String estado, double precioMinuto) {
         this.numeroPlaza = numeroPlaza;
         this.tarifa = tarifa;
         this.tipoPlaza = tipoPlaza;
@@ -35,22 +31,6 @@ public class PlazaVO {
     
 
     public PlazaVO() {
-    }
-
-    public LocalDate getFechaEntrada() {
-        return fechaEntrada;
-    }
-
-    public void setFechaEntrada(LocalDate fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
-    }
-
-    public LocalDate getFechaSalida() {
-        return fechaSalida;
-    }
-
-    public void setFechaSalida(LocalDate fechaSalida) {
-        this.fechaSalida = fechaSalida;
     }
 
     public String getNumeroPlaza() {
@@ -95,7 +75,7 @@ public class PlazaVO {
 
     @Override
     public String toString() {
-        return "PlazaVO{" + "fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", numeroPlaza=" + numeroPlaza + ", tarifa=" + tarifa + ", tipoPlaza=" + tipoPlaza + ", estado=" + estado + ", precioMinuto=" + precioMinuto + '}';
+        return "PlazaVO{" + "numeroPlaza=" + numeroPlaza + ", tarifa=" + tarifa + ", tipoPlaza=" + tipoPlaza + ", estado=" + estado + ", precioMinuto=" + precioMinuto + '}';
     }
 
       
