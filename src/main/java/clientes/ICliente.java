@@ -28,6 +28,6 @@ public interface ICliente {
     
     // Método para modificar una persona. Se modifica a la persona que tenga esa 'pk'
     // con los nuevos datos que traiga la persona 'nuevosDatos'
-    int updateCliente (int dni, ClientesVO cliente) throws SQLException;
+    int updateCliente (String dni, ClientesVO cliente) throws SQLException;
     
 }
