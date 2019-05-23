@@ -19,11 +19,12 @@ public class TicketsVO {
     private LocalDate fechaSalida;
     private LocalTime horaEntrada;
     private LocalTime horaSalida;
-    private String precio;
+    private double precio;
     private int pin;
     private String matricula;
+    private String numeroPlaza;
 
-    public TicketsVO(LocalDate fechaEntrada, LocalDate fechaSalida, LocalTime horaEntrada, LocalTime horaSalida, String precio, int pin, String matricula) {
+    public TicketsVO(LocalDate fechaEntrada, LocalDate fechaSalida, LocalTime horaEntrada, LocalTime horaSalida, double precio, int pin, String matricula, String numeroPlaza) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.horaEntrada = horaEntrada;
@@ -31,6 +32,7 @@ public class TicketsVO {
         this.precio = precio;
         this.pin = pin;
         this.matricula = matricula;
+        this.numeroPlaza = numeroPlaza;
     }
 
     public TicketsVO() {
@@ -68,11 +70,11 @@ public class TicketsVO {
         this.horaSalida = horaSalida;
     }
 
-    public String getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
@@ -92,9 +94,17 @@ public class TicketsVO {
         this.matricula = matricula;
     }
 
+    public String getNumeroPlaza() {
+        return numeroPlaza;
+    }
+
+    public void setNumeroPlaza(String numeroPlaza) {
+        this.numeroPlaza = numeroPlaza;
+    }
+
     @Override
     public String toString() {
-        return "TicketsVO{" + "fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", precio=" + precio + ", pin=" + pin + ", matricula=" + matricula + '}';
+        return "TicketsVO{" + "fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", precio=" + precio + ", pin=" + pin + ", matricula=" + matricula + ", numeroPlaza=" + numeroPlaza + '}';
     }
 
 }
