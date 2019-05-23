@@ -53,6 +53,10 @@ public class ClienteDAO implements ICliente{
                 cliente.setApellido(res.getString("apellido"));
                 cliente.setTipoAbono(res.getString("abono"));
                 cliente.setEmail(res.getString("email"));
+                cliente.setFechaInicio(res.getDate("fechaInicio").toLocalDate());
+                cliente.setFechaFin(res.getDate("fechaFin").toLocalDate());
+                cliente.setNumeroPlaza(res.getString("numeroPlaza"));
+                cliente.setCoste(res.getDouble("coste"));
                 return cliente;
             }
 
@@ -64,7 +68,7 @@ public class ClienteDAO implements ICliente{
      public int insertCliente(ClientesVO cliente) throws SQLException {
 
         int numFilas = 0;
-        String sql = "insert into clientes values (?,?,?,?,?,?,?)";
+        String sql = "insert into clientes values (?,?,?,?,?,?,?,?,?,?,?)";
 
         if (buscarDni(cliente.getDni()) != null) {
 
@@ -80,7 +84,10 @@ public class ClienteDAO implements ICliente{
                 prest.setString(5, cliente.getApellido());
                 prest.setString(6, cliente.getTipoAbono());
                 prest.setString(7, cliente.getEmail());
-                
+                prest.setDate(8, Date.valueOf(cliente.getFechaInicio()));
+                prest.setDate(9, Date.valueOf(cliente.getFechaFin()));
+                prest.setString(10, cliente.getNumeroPlaza());
+                prest.setDouble(11, cliente.getCoste());
 
                 numFilas = prest.executeUpdate();
             }
@@ -121,7 +128,7 @@ public class ClienteDAO implements ICliente{
      public int updateCliente(int dni, ClientesVO cliente) throws SQLException {
          
         int numFilas = 0;
-        String sql = "update clientes set dni = ?, matricula = ?, tarjetaCredito = ?, nombre = ?, apellido = ?, abono = ?, email = ? where dni=?";
+        String sql = "update clientes set dni = ?, matricula = ?, tarjetaCredito = ?, nombre = ?, apellido = ?, abono = ?, email = ?, fechaInicio = ?, fechaFin=?, numeroPlaza=?, coste=? where dni=?";
 
         if (buscarDni(cliente.getDni()) == null) {
 
@@ -137,7 +144,10 @@ public class ClienteDAO implements ICliente{
                 prest.setString(5, cliente.getApellido());
                 prest.setString(6, cliente.getTipoAbono());
                 prest.setString(7, cliente.getEmail());
-                prest.setInt(8, dni);
+                prest.setDate(8, Date.valueOf(cliente.getFechaInicio()));
+                prest.setDate(9, Date.valueOf(cliente.getFechaFin()));
+                prest.setString(10, cliente.getNumeroPlaza());
+                prest.setDouble(11, cliente.getCoste());
 
                 numFilas = prest.executeUpdate();
             }
