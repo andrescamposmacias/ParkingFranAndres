@@ -5,7 +5,6 @@
  */
 package tickets;
 
-import clientesSinAbono.ClienteSinAbonoVO;
 import java.sql.SQLException;
 import java.util.List;
 
