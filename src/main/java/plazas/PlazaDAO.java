@@ -146,6 +146,25 @@ public class PlazaDAO implements IPlaza{
             return numFilas;
         }
     }
+    
+    @Override
+    public int updatePlazaAbonadoRetirado(String numPlaza) throws SQLException {
+
+        int numFilas = 0;
+        String sql = "update plaza set estado = 'Reservado vacio' where numeroPlaza=?";
+       
+            // Instanciamos el objeto PreparedStatement para inserción
+            // de datos. Sentencia parametrizada
+            try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+                // Establecemos los parámetros de la sentencia
+                prest.setString(1, numPlaza);
+                
+                numFilas = prest.executeUpdate();
+            }
+            return numFilas;
+        
+    }
 
     @Override
     public int deletePlaza() throws SQLException {
