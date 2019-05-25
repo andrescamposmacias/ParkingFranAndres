@@ -56,7 +56,7 @@ public class TicketsDAO implements ITicket{
     }
     
     @Override
-    public TicketsVO buscarTickets(String matricula) throws SQLException {
+    public boolean buscarTicketsMatricula(String matricula) throws SQLException {
 
         ResultSet res = null;
         TicketsVO ticket = new TicketsVO();
@@ -65,7 +65,7 @@ public class TicketsDAO implements ITicket{
 
         try (PreparedStatement prest = con.prepareStatement(sql)) {
 
-            prest.setString(5, matricula);
+            prest.setString(1, matricula);
 
             res = prest.executeQuery();
 
@@ -79,10 +79,72 @@ public class TicketsDAO implements ITicket{
                 ticket.setPin(res.getInt("pin"));
                 ticket.setMatricula(res.getString("matricula"));
                 ticket.setNumeroPlaza(res.getString("numeroPlaza"));
-                return ticket;
+                return true;
             }
 
-            return null;
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean buscarTicketsPin(int pin) throws SQLException {
+
+        ResultSet res = null;
+        TicketsVO ticket = new TicketsVO();
+
+        String sql = "select * from tickets where pin=?";
+
+        try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+            prest.setInt(1, pin);
+
+            res = prest.executeQuery();
+
+            if (res.first()) {
+ 
+                ticket.setFechaEntrada(res.getDate("fechaEntrada").toLocalDate());
+                ticket.setFechaSalida(res.getDate("fechaSalida").toLocalDate());
+                ticket.setHoraEntrada(res.getTime("horaEntrada").toLocalTime());
+                ticket.setHoraSalida(res.getTime("horaSalida").toLocalTime());
+                ticket.setPrecio(res.getDouble("precio"));
+                ticket.setPin(res.getInt("pin"));
+                ticket.setMatricula(res.getString("matricula"));
+                ticket.setNumeroPlaza(res.getString("numeroPlaza"));
+                return true;
+            }
+
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean buscarTicketsNumeroPlaza(String numeroPlaza) throws SQLException {
+
+        ResultSet res = null;
+        TicketsVO ticket = new TicketsVO();
+
+        String sql = "select * from tickets where numeroPlaza=?";
+
+        try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+            prest.setString(1, numeroPlaza);
+
+            res = prest.executeQuery();
+
+            if (res.first()) {
+ 
+                ticket.setFechaEntrada(res.getDate("fechaEntrada").toLocalDate());
+                ticket.setFechaSalida(res.getDate("fechaSalida").toLocalDate());
+                ticket.setHoraEntrada(res.getTime("horaEntrada").toLocalTime());
+                ticket.setHoraSalida(res.getTime("horaSalida").toLocalTime());
+                ticket.setPrecio(res.getDouble("precio"));
+                ticket.setPin(res.getInt("pin"));
+                ticket.setMatricula(res.getString("matricula"));
+                ticket.setNumeroPlaza(res.getString("numeroPlaza"));
+                return true;
+            }
+
+            return false;
         }
     }
     
@@ -92,7 +154,7 @@ public class TicketsDAO implements ITicket{
         int numFilas = 0;
         String sql = "insert into tickets values (?,?,?,?,?,?,?,?)";
 
-        if (buscarTickets(ticket.getMatricula()) != null) {
+        if (buscarTicketsMatricula(ticket.getMatricula())) {
             
             return numFilas;
         } else {
@@ -150,7 +212,7 @@ public class TicketsDAO implements ITicket{
         int numFilas = 0;
         String sql = "update plaza set fechaEntrada = ?, fechaSalida = ?,horaEntrada = ?,horaSalida = ?, precio = ?, pin = ?, matricula = ?, numeroPlaza = ? where matricula=?";
 
-        if (buscarTickets(ticket.getMatricula()) == null) {
+        if (buscarTicketsMatricula(ticket.getMatricula())) {
 
             return numFilas;
         } else {
