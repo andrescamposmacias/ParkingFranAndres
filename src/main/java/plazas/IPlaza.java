@@ -31,6 +31,10 @@ public interface IPlaza {
     // con los nuevos datos que traiga la persona 'nuevosDatos'
     int updatePlaza (String numPlaza, PlazaVO plaza) throws SQLException;
     
+    // Método para modificar una persona. Se modifica a la persona que tenga esa 'pk'
+    // con los nuevos datos que traiga la persona 'nuevosDatos'
+    int updatePlazaAbonadoRetirado (String numPlaza) throws SQLException;
+    
     // Método para borrar toda la tabla
     int deletePlaza() throws SQLException;
 }
