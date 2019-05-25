@@ -11,6 +11,9 @@ import clientes.ClientesVO;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import plazas.PlazaDAO;
+import tickets.TicketsDAO;
+import vehiculos.VehiculoDAO;
 
 /**
  *
@@ -20,7 +23,9 @@ public class Parking {
 
     public static void main(String[] args) throws SQLException {
         ClienteDAO daoPersona = new ClienteDAO();
-
+        TicketsDAO daoTickets = new TicketsDAO();
+        PlazaDAO daoPlaza = new PlazaDAO();
+        
         String dniRegistro;
         String matriculaRegistro;
         int tarjetaCreditoRegistro;
@@ -50,7 +55,23 @@ public class Parking {
                     int eleccionAbonado = teclado.nextInt();
                     switch (eleccionAbonado) {
                         case 1:
+                            System.out.println("Introduzca su numero de la plaza");
+                            String numeroPlazaRetirado = teclado.nextLine();
 
+                            System.out.println("Introduzca su matricula");
+                            String matriculaRetirado = teclado.nextLine();
+                            
+                            System.out.println("Introduzca su pin");
+                            int pinRetirado = teclado.nextInt();
+                            
+                            if(daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)){
+                                System.out.println("Retirando vehiculo");
+                                daoPlaza.updatePlazaAbonadoRetirado(numeroPlazaRetirado);
+                            }else{
+                                System.out.println("La matricula o el numero de plaza o el pin es incorrecto");
+                            }
+                            break;
+                            
                         case 2:
                             System.out.println("Introduzca su DNI");
                             String dniAbonado = teclado.nextLine();
