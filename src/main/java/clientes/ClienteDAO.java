@@ -34,7 +34,7 @@ public class ClienteDAO implements ICliente{
 
         try (Statement st = con.createStatement()) {
 
-            ResultSet res = st.executeQuery("select * from tickets");
+            ResultSet res = st.executeQuery("select * from clientes");
 
             while (res.next()) {
                 ClientesVO p = new ClientesVO();       
@@ -185,6 +185,23 @@ public class ClienteDAO implements ICliente{
             }
             return numFilas;
         }
+    }
+     
+     @Override
+    public int deleteCliente() throws SQLException {
+        String sql = "delete from clientes";
+
+        int nfilas = 0;
+
+        // Preparamos el borrado de datos  mediante un Statement
+        // No hay parámetros en la sentencia SQL
+        try (Statement st = con.createStatement()) {
+            // Ejecución de la sentencia
+            nfilas = st.executeUpdate(sql);
+        }
+
+        // El borrado se realizó con éxito, devolvemos filas afectadas
+        return nfilas;
     }
  
  }
