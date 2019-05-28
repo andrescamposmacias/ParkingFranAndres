@@ -39,4 +39,6 @@ public interface ITicket {
     // con los nuevos datos que traiga la persona 'nuevosDatos'
     int updateTickets(String matricula, TicketsVO ticket) throws SQLException;
     
+    public int deleteTickets() throws SQLException;
+    
 }
