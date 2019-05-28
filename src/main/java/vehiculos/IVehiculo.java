@@ -35,4 +35,6 @@ public interface IVehiculo {
     // Método para modificar una persona. Se modifica a la persona que tenga esa 'pk'
     // con los nuevos datos que traiga la persona 'nuevosDatos'
     int updateVehiculo(String matricula, VehiculoVO nuevosDatos) throws SQLException;
+    
+    public int deleteVehiculos() throws SQLException;
 }
