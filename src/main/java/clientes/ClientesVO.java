@@ -132,7 +132,7 @@ public class ClientesVO {
 
     @Override
     public String toString() {
-        return "ClientesVO{" + "dni=" + dni + ", matricula=" + matricula + ", tarjetaCredito=" + tarjetaCredito + ", nombre=" + nombre + ", apellido=" + apellido + ", tipoAbono=" + tipoAbono + ", email=" + email + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", numeroPlaza=" + numeroPlaza + ", coste=" + coste + '}';
+        return dni + ", " +matricula + ", " +tarjetaCredito + ", " +nombre  + ", " +apellido + ", " +tipoAbono  + ", " +email +  ", " +fechaInicio  + ", " +fechaFin + ", " +numeroPlaza  + ", " +coste;
     }
 
 }
