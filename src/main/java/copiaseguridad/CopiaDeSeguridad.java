@@ -43,13 +43,13 @@ public class CopiaDeSeguridad {
             DateFormat hourdateFormat = new SimpleDateFormat("HH.mm.ss dd-MM-yyyy");
             String historial = hourdateFormat.format(date);
 
-            File archivoBackupHoy = new File(archivoBackup + "\\" + historial);
+            File archivoBackupHoy = new File(archivoBackup + "/" + historial);
             archivoBackupHoy.mkdir();
 
-            Process clientes = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysqldump.exe -u root -pandres parking clientes");
-            Process vehiculo = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysqldump.exe -u root -pandres parking vehiculo");
-            Process plaza = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysqldump.exe -u root -pandres parking plaza");
-            Process tickets = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysqldump.exe -u root -pandres parking tickets");
+            Process clientes = Runtime.getRuntime().exec("mysqldump -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking clientes");
+            Process vehiculo = Runtime.getRuntime().exec("mysqldump -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking vehiculo");
+            Process plaza = Runtime.getRuntime().exec("mysqldump -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking plaza");
+            Process tickets = Runtime.getRuntime().exec("mysqldump -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking tickets");
 
             new HiloLector(clientes.getErrorStream()).start();
             new HiloLector(vehiculo.getErrorStream()).start();
@@ -57,19 +57,19 @@ public class CopiaDeSeguridad {
             new HiloLector(tickets.getErrorStream()).start();
 
             InputStream isClientes = clientes.getInputStream();
-            FileOutputStream fosClientes = new FileOutputStream(archivoBackupHoy + "\\clientes.txt");
+            FileOutputStream fosClientes = new FileOutputStream(archivoBackupHoy + "/clientes.txt");
             byte[] bufferClientes = new byte[1000];
 
             InputStream isVehiculo = vehiculo.getInputStream();
-            FileOutputStream fosVehiculo = new FileOutputStream(archivoBackupHoy + "\\vehiculo.txt");
+            FileOutputStream fosVehiculo = new FileOutputStream(archivoBackupHoy + "/vehiculo.txt");
             byte[] bufferVehiculo = new byte[1000];
 
             InputStream isPlaza = plaza.getInputStream();
-            FileOutputStream fosPlaza = new FileOutputStream(archivoBackupHoy + "\\plaza.txt");
+            FileOutputStream fosPlaza = new FileOutputStream(archivoBackupHoy + "/plaza.txt");
             byte[] bufferPlaza = new byte[1000];
 
             InputStream isTickets = tickets.getInputStream();
-            FileOutputStream fosTickets = new FileOutputStream(archivoBackupHoy + "\\tickets.txt");
+            FileOutputStream fosTickets = new FileOutputStream(archivoBackupHoy + "/tickets.txt");
             byte[] bufferTickets = new byte[1000];
 
             int leidoClientes = isClientes.read(bufferClientes);
@@ -136,10 +136,9 @@ public class CopiaDeSeguridad {
                     seleccion = teclado.nextInt();
                 } while (!(seleccion >= 1) || !(seleccion <= (archivos.length)));
 
-                for (int i = 0; i < archivos.length; i++) {
-
-                    seleccionArchivo = archivos[(seleccion - 1)];
-
+                    seleccionArchivo = archivos[(seleccion - 1)];              
+               
+            }
                 }
                
             }
@@ -162,12 +161,12 @@ public class CopiaDeSeguridad {
             osClientes.close();
             fisClientes.close();
             
-            Process vehiculo = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysql.exe -u root -pandres parking vehiculo");
+            Process vehiculo = Runtime.getRuntime().exec("mysql -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking vehiculo");
 
             new HiloLector(vehiculo.getErrorStream()).start();
 
             OutputStream osVehiculo = vehiculo.getOutputStream();
-            FileInputStream fisVehiculo = new FileInputStream(seleccionArchivo + "\\vehiculo.txt");
+            FileInputStream fisVehiculo = new FileInputStream(seleccionArchivo + "/vehiculo.txt");
             byte[] bufferVehiculo = new byte[1000];
 
             int leidoVehiculo = fisVehiculo.read(bufferVehiculo);
@@ -179,13 +178,31 @@ public class CopiaDeSeguridad {
             osVehiculo.flush();
             osVehiculo.close();
             fisVehiculo.close();
+
+            Process clientes = Runtime.getRuntime().exec("mysql -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking clientes");
+
+            new HiloLector(clientes.getErrorStream()).start();
+
+            OutputStream osClientes = clientes.getOutputStream();
+            FileInputStream fisClientes = new FileInputStream(seleccionArchivo + "/clientes.txt");
+            byte[] bufferClientes = new byte[1000];
+
+            int leidoClientes = fisClientes.read(bufferClientes);
+            while (leidoClientes > 0) {
+                osClientes.write(bufferClientes, 0, leidoClientes);
+                leidoClientes = fisClientes.read(bufferClientes);
+            }
+
+            osClientes.flush();
+            osClientes.close();
+            fisClientes.close();          
             
-            Process plaza = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysql.exe -u root -pandres parking plaza");
+            Process plaza = Runtime.getRuntime().exec("mysql -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking plaza");
 
             new HiloLector(plaza.getErrorStream()).start();
 
             OutputStream osPlaza = plaza.getOutputStream();
-            FileInputStream fisPlaza = new FileInputStream(seleccionArchivo + "\\plaza.txt");
+            FileInputStream fisPlaza = new FileInputStream(seleccionArchivo + "/plaza.txt");
             byte[] bufferPlaza = new byte[1000];
 
             int leidoPlaza = fisPlaza.read(bufferPlaza);
@@ -198,12 +215,12 @@ public class CopiaDeSeguridad {
             osPlaza.close();
             fisPlaza.close();
             
-            Process tickets = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysql.exe -u root -pandres parking tickets");
+            Process tickets = Runtime.getRuntime().exec("mysql -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking tickets");
 
             new HiloLector(clientes.getErrorStream()).start();
 
             OutputStream osTickets = tickets.getOutputStream();
-            FileInputStream fisTickets = new FileInputStream(seleccionArchivo + "\\tickets.txt");
+            FileInputStream fisTickets = new FileInputStream(seleccionArchivo + "/tickets.txt");
             byte[] bufferTickets = new byte[1000];
 
             int leidoTickets = fisTickets.read(bufferTickets);
