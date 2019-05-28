@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface ICliente {
     
+    public List<ClientesVO> getAll() throws SQLException;
+    
     // Méodo para obtener un registro a partir de la PK
     ClientesVO buscarCliente(String dni, String matricula) throws SQLException;
     
