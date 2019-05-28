@@ -37,17 +37,6 @@ public class TicketsVO {
         this.numeroPlaza = numeroPlaza;
     }
 
-    public TicketsVO(LocalDate fechaEntrada, LocalDate fechaSalida, LocalTime horaEntrada, LocalTime horaSalida, double precio, int pin, String matricula, String numeroPlaza) {
-        this.fechaEntrada = fechaEntrada;
-        this.fechaSalida = fechaSalida;
-        this.horaEntrada = horaEntrada;
-        this.horaSalida = horaSalida;
-        this.precio = precio;
-        this.pin = pin;
-        this.matricula = matricula;
-        this.numeroPlaza = numeroPlaza;
-    }
-
     public TicketsVO() {
     }
 
