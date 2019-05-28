@@ -34,7 +34,7 @@ public class PlazaDAO implements IPlaza{
 
         try (Statement st = con.createStatement()) {
 
-            ResultSet res = st.executeQuery("select * from tickets");
+            ResultSet res = st.executeQuery("select * from plaza");
 
             while (res.next()) {
                 PlazaVO p = new PlazaVO();
@@ -45,7 +45,6 @@ public class PlazaDAO implements IPlaza{
                 p.setTipoPlaza(res.getString("tipoPlaza"));
                 p.setEstado(res.getString("estado"));
                 p.setPrecioMinuto(res.getDouble("precioMinuto"));
-
 
                 lista.add(p);
             }
