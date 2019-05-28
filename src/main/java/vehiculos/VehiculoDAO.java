@@ -175,4 +175,21 @@ public class VehiculoDAO implements IVehiculo {
             return numFilas;
         }
     }
+    
+    @Override
+    public int deleteVehiculos() throws SQLException {
+        String sql = "delete from vehiculo";
+
+        int nfilas = 0;
+
+        // Preparamos el borrado de datos  mediante un Statement
+        // No hay parámetros en la sentencia SQL
+        try (Statement st = con.createStatement()) {
+            // Ejecución de la sentencia
+            nfilas = st.executeUpdate(sql);
+        }
+
+        // El borrado se realizó con éxito, devolvemos filas afectadas
+        return nfilas;
+    }
 }
