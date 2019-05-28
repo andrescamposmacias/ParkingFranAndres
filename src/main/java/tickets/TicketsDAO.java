@@ -39,6 +39,7 @@ public class TicketsDAO implements ITicket{
             while (res.next()) {
                 TicketsVO p = new TicketsVO();
          
+                p.setCodigo(res.getInt("codigo"));
                 p.setFechaEntrada(res.getDate("fechaEntrada").toLocalDate());
                 p.setHoraEntrada(res.getTime("horaEntrada").toLocalTime());
                 p.setFechaSalida(res.getDate("fechaSalida").toLocalDate());
@@ -232,6 +233,23 @@ public class TicketsDAO implements ITicket{
             }
             return numFilas;
         }
+    }
+    
+    @Override
+    public int deleteTickets() throws SQLException {
+        String sql = "delete from tickets";
+
+        int nfilas = 0;
+
+        // Preparamos el borrado de datos  mediante un Statement
+        // No hay parámetros en la sentencia SQL
+        try (Statement st = con.createStatement()) {
+            // Ejecución de la sentencia
+            nfilas = st.executeUpdate(sql);
+        }
+
+        // El borrado se realizó con éxito, devolvemos filas afectadas
+        return nfilas;
     }
     
 }
