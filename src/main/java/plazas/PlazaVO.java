@@ -92,7 +92,7 @@ public class PlazaVO {
 
     @Override
     public String toString() {
-        return "PlazaVO{" + "codigo=" + codigo + ", numeroPlaza=" + numeroPlaza + ", tarifa=" + tarifa + ", tipoPlaza=" + tipoPlaza + ", estado=" + estado + ", precioMinuto=" + precioMinuto + '}';
+        return codigo + ", " +numeroPlaza  + ", " +tarifa  + ", " +tipoPlaza  + ", " +estado  + ", " +precioMinuto;
     }
     
 
