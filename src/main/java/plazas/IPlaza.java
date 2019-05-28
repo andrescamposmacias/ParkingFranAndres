@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface IPlaza {
     
+    public List<PlazaVO> getAll() throws SQLException;
+    
     // Méodo para obtener un registro a partir de la PK
     PlazaVO buscarPlaza(String numPlaza) throws SQLException;
     
