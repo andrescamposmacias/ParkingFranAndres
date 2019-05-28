@@ -29,6 +29,36 @@ public class ClienteDAO implements ICliente{
     }
      
      @Override
+    public List<ClientesVO> getAll() throws SQLException {
+        List<ClientesVO> lista = new ArrayList<>();
+
+        try (Statement st = con.createStatement()) {
+
+            ResultSet res = st.executeQuery("select * from tickets");
+
+            while (res.next()) {
+                ClientesVO p = new ClientesVO();       
+         
+                p.setDni(res.getString("dni"));
+                p.setMatricula(res.getString("matricula"));
+                p.setTarjetaCredito(res.getInt("tarjetaCredito"));
+                p.setNombre(res.getString("nombre"));
+                p.setApellido(res.getString("apellido"));
+                p.setTipoAbono(res.getString("abono"));
+                p.setEmail(res.getString("email"));
+                p.setFechaInicio(res.getDate("fechaInicio").toLocalDate());
+                p.setFechaFin(res.getDate("fechaFin").toLocalDate());
+                p.setNumeroPlaza(res.getString("numeroPlaza"));
+                p.setCoste(res.getDouble("coste"));
+
+                lista.add(p);
+            }
+        }
+
+        return lista;
+    }
+     
+     @Override
      public ClientesVO buscarCliente(String dni, String matricula) throws SQLException {
 
         ResultSet res = null;
