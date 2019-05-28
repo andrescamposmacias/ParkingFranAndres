@@ -72,6 +72,7 @@ public class TicketsDAO implements ITicket{
 
             if (res.first()) {
  
+                ticket.setCodigo(res.getInt("codigo"));
                 ticket.setFechaEntrada(res.getDate("fechaEntrada").toLocalDate());
                 ticket.setFechaSalida(res.getDate("fechaSalida").toLocalDate());
                 ticket.setHoraEntrada(res.getTime("horaEntrada").toLocalTime());
@@ -103,6 +104,7 @@ public class TicketsDAO implements ITicket{
 
             if (res.first()) {
  
+                ticket.setCodigo(res.getInt("codigo"));
                 ticket.setFechaEntrada(res.getDate("fechaEntrada").toLocalDate());
                 ticket.setFechaSalida(res.getDate("fechaSalida").toLocalDate());
                 ticket.setHoraEntrada(res.getTime("horaEntrada").toLocalTime());
@@ -134,6 +136,7 @@ public class TicketsDAO implements ITicket{
 
             if (res.first()) {
  
+                ticket.setCodigo(res.getInt("codigo"));
                 ticket.setFechaEntrada(res.getDate("fechaEntrada").toLocalDate());
                 ticket.setFechaSalida(res.getDate("fechaSalida").toLocalDate());
                 ticket.setHoraEntrada(res.getTime("horaEntrada").toLocalTime());
@@ -153,7 +156,7 @@ public class TicketsDAO implements ITicket{
     public int insertTickets(TicketsVO ticket) throws SQLException {
 
         int numFilas = 0;
-        String sql = "insert into tickets values (?,?,?,?,?,?,?,?)";
+        String sql = "insert into tickets values (?,?,?,?,?,?,?,?,?)";
 
         if (buscarTicketsMatricula(ticket.getMatricula())) {
             
@@ -163,14 +166,15 @@ public class TicketsDAO implements ITicket{
             // de datos. Sentencia parametrizada
             try (PreparedStatement prest = con.prepareStatement(sql)) {
 
-                prest.setDate(1, Date.valueOf(ticket.getFechaEntrada()));
-                prest.setDate(2, Date.valueOf(ticket.getFechaSalida()));
-                prest.setTime(3, Time.valueOf(ticket.getHoraEntrada()));
-                prest.setTime(4, Time.valueOf(ticket.getHoraSalida()));
-                prest.setDouble(5, ticket.getPrecio());
-                prest.setInt(6, ticket.getPin());
-                prest.setString(7, ticket.getMatricula()); 
-                prest.setString(8, ticket.getNumeroPlaza());
+                prest.setInt(1, ticket.getCodigo());
+                prest.setDate(2, Date.valueOf(ticket.getFechaEntrada()));
+                prest.setDate(3, Date.valueOf(ticket.getFechaSalida()));
+                prest.setTime(4, Time.valueOf(ticket.getHoraEntrada()));
+                prest.setTime(5, Time.valueOf(ticket.getHoraSalida()));
+                prest.setDouble(6, ticket.getPrecio());
+                prest.setInt(7, ticket.getPin());
+                prest.setString(8, ticket.getMatricula()); 
+                prest.setString(9, ticket.getNumeroPlaza());
 
                 numFilas = prest.executeUpdate();
             }
@@ -211,7 +215,7 @@ public class TicketsDAO implements ITicket{
     public int updateTickets(String matricula, TicketsVO ticket) throws SQLException {
 
         int numFilas = 0;
-        String sql = "update plaza set fechaEntrada = ?, fechaSalida = ?,horaEntrada = ?,horaSalida = ?, precio = ?, pin = ?, matricula = ?, numeroPlaza = ? where matricula=?";
+        String sql = "update plaza set codigo = ? fechaEntrada = ?, fechaSalida = ?,horaEntrada = ?,horaSalida = ?, precio = ?, pin = ?, matricula = ?, numeroPlaza = ? where matricula=?";
 
         if (buscarTicketsMatricula(ticket.getMatricula())) {
 
@@ -220,14 +224,15 @@ public class TicketsDAO implements ITicket{
 
             try (PreparedStatement prest = con.prepareStatement(sql)) {
 
-                prest.setDate(1, Date.valueOf(ticket.getFechaEntrada()));
-                prest.setDate(2, Date.valueOf(ticket.getFechaSalida()));
-                prest.setTime(3, Time.valueOf(ticket.getHoraEntrada()));
-                prest.setTime(4, Time.valueOf(ticket.getHoraSalida()));
-                prest.setDouble(5, ticket.getPrecio());
-                prest.setInt(6, ticket.getPin());
-                prest.setString(7, ticket.getMatricula());    
-                prest.setString(8, ticket.getNumeroPlaza());
+                prest.setInt(1, ticket.getCodigo());
+                prest.setDate(2, Date.valueOf(ticket.getFechaEntrada()));
+                prest.setDate(3, Date.valueOf(ticket.getFechaSalida()));
+                prest.setTime(4, Time.valueOf(ticket.getHoraEntrada()));
+                prest.setTime(5, Time.valueOf(ticket.getHoraSalida()));
+                prest.setDouble(6, ticket.getPrecio());
+                prest.setInt(7, ticket.getPin());
+                prest.setString(8, ticket.getMatricula());    
+                prest.setString(9, ticket.getNumeroPlaza());
 
                 numFilas = prest.executeUpdate();
             }
