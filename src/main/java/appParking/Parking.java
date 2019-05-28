@@ -43,7 +43,7 @@ public class Parking {
         System.out.println("Bienvenido a HINOBEPA SL, empresa que se dedica a la gestión de parkings de todo el mundo");
         System.out.println("Si usted es ya un cliente abonado, pulse 1\n"
                 + "Si usted es un cliente no abonado, pulse 2\n"
-                + "Si usted quiere darse de alta como abonado, pulse 3"
+                + "Si usted quiere darse de alta como abonado, pulse 3\n"
                 + "Si usted es un administrador, pulse 4");
         int tipoCliente = teclado.nextInt();
         try {
@@ -82,28 +82,28 @@ public class Parking {
                             String matriculaAbonado = teclado.nextLine();
                             daoPersona.buscarCliente(dniAbonado, matriculaAbonado);
 
-                        case 3:
-                            System.out.println("Subiendo persiana del salón");
-                            return Comando.SUBIR_PERSIANA_SALON;
-
-                        case 4:
-                            System.out.println("Bajando persiana del salón");
-                            return Comando.BAJAR_PERSIANA_SALON;
-
-                        case 5:
-                            System.out.println("Dejando la persiana del salón a media altura");
-                            return Comando.MEDIA_PERSIANA_SALON;
-
-                        case 6:
-                            System.out.println("Conectando a camara de vigilancia del salón");
-                            return Comando.CONSULTAR_VIGILANCIA_SALON;
+//                        case 3:
+//                            System.out.println("Subiendo persiana del salón");
+//                            return Comando.SUBIR_PERSIANA_SALON;
+//
+//                        case 4:
+//                            System.out.println("Bajando persiana del salón");
+//                            return Comando.BAJAR_PERSIANA_SALON;
+//
+//                        case 5:
+//                            System.out.println("Dejando la persiana del salón a media altura");
+//                            return Comando.MEDIA_PERSIANA_SALON;
+//
+//                        case 6:
+//                            System.out.println("Conectando a camara de vigilancia del salón");
+//                            return Comando.CONSULTAR_VIGILANCIA_SALON;
 
                     }
 
                     break;
-                case 2:
-                    monthString = "February";
-                    break;
+//                case 2:
+//                    monthString = "February";
+//                    break;
                 case 3:
 
                     System.out.println("Introduzca su DNI");
@@ -175,39 +175,39 @@ public class Parking {
                                 System.out.println("Se ha restaurado la copia de seguridad correctamente");
                         }
                     break;
-                case 5:
-                    monthString = "May";
-                    break;
-                case 6:
-                    monthString = "June";
-                    break;
-                case 7:
-                    monthString = "July";
-                    break;
-                case 8:
-                    monthString = "August";
-                    break;
-                case 9:
-                    monthString = "September";
-                    break;
-                case 10:
-                    monthString = "October";
-                    break;
-                case 11:
-                    monthString = "November";
-                    break;
-                case 12:
-                    monthString = "December";
-                    break;
-                default:
-                    monthString = "Invalid month";
-                    break;
+//                case 5:
+//                    monthString = "May";
+//                    break;
+//                case 6:
+//                    monthString = "June";
+//                    break;
+//                case 7:
+//                    monthString = "July";
+//                    break;
+//                case 8:
+//                    monthString = "August";
+//                    break;
+//                case 9:
+//                    monthString = "September";
+//                    break;
+//                case 10:
+//                    monthString = "October";
+//                    break;
+//                case 11:
+//                    monthString = "November";
+//                    break;
+//                case 12:
+//                    monthString = "December";
+//                    break;
+//                default:
+//                    monthString = "Invalid month";
+//                    break;
             }
         } catch (SQLException sqle) {
             System.out.println("No se ha podido realizar la operación:");
             System.out.println(sqle.getMessage());
         }
-        System.out.println(monthString);
+//        System.out.println(monthString);
     }
 
 }
