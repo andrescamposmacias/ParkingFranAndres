@@ -9,6 +9,9 @@ import vehiculos.VehiculoDAO;
 import vehiculos.VehiculoVO;
 import clientes.ClientesVO;
 import clientes.ClienteDAO;
+import copiaseguridad.CopiaYRestauracion;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,13 +28,13 @@ import tickets.TicketsVO;
  */
 public class Comprobador {
 
-    public static void main(String[] args) {
-        
-        ClienteDAO daoPersona = new ClienteDAO();
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+
+        ClienteDAO daoCliente = new ClienteDAO();
         VehiculoDAO daoVehiculo = new VehiculoDAO();
         PlazaDAO daoPlaza = new PlazaDAO();
         TicketsDAO daoTickets = new TicketsDAO();
-        
+
         List<ClientesVO> listaPersonas = new ArrayList<>();
         LocalDate inicio = LocalDate.now();
         LocalDate fin = LocalDate.now();
@@ -50,48 +53,63 @@ public class Comprobador {
         listaVehiculos.add(new VehiculoVO("3265FGH", "Motocicleta"));
         listaVehiculos.add(new VehiculoVO("3265JMN", "Turismo"));
         listaVehiculos.add(new VehiculoVO("3265POI", "Furgoneta"));
-        
+
         List<TicketsVO> listaTickets = new ArrayList<>();
-        listaTickets.add(new TicketsVO(inicio, fin, hoyHora, finHora, 10.0, 126, "3265JHG", "1"));
-        listaTickets.add(new TicketsVO(inicio, fin, hoyHora, finHora, 10.0, 126, "3265ASD", "1"));
-        
+        listaTickets.add(new TicketsVO(1,inicio, fin, hoyHora, finHora, 10.0, 126, "3265JHG", "1"));
+        listaTickets.add(new TicketsVO(2,inicio, fin, hoyHora, finHora, 10.0, 126, "3265ASD", "1"));
+
         List<PlazaVO> listaPlaza = new ArrayList<>();
-        listaPlaza.add(new PlazaVO("1", 3.25, "Turismo", "vacio", 10.0));
-        listaPlaza.add(new PlazaVO("2", 30.25, "Motocicleta", "ocupada", 30.0));
+        listaPlaza.add(new PlazaVO(1,"1", 3.25, "Turismo", "vacio", 10.0));
+        listaPlaza.add(new PlazaVO(2,"2", 30.25, "Motocicleta", "ocupada", 30.0));
+
         
         
         try {
+            //CopiaYRestauracion.copia();
+            //CopiaYRestauracion.restaurar();
             System.out.println("Nº vehiculos insertados " + daoVehiculo.insertVehiculo(listaVehiculos));
-            System.out.println("-----------------------------------------");
-            System.out.println("Buscamos matricula 1234KJH: " + daoVehiculo.findByMatricula("1234KJH"));
-            System.out.println("----------Lista de Vehiculos-------------");
-            listaVehiculos.forEach(System.out::println);
-            System.out.println("Borramos el vehiculo con matricula 9841ASD, furgoneta(sale de su plaza del parking). Vehiculos borrados: " + daoVehiculo.deleteVehiculo(new VehiculoVO("9841ASD", "Furgoneta")));
-            System.out.println("----------Lista de Vehiculos(SIN MATRICULA 9841ASD)-------------");
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Buscamos matricula 1234KJH: " + daoVehiculo.findByMatricula("1234KJH"));
+//            System.out.println("----------Lista de Vehiculos-------------");
+//            listaVehiculos.forEach(System.out::println);
+//            System.out.println("Borramos el vehiculo con matricula 9841ASD, furgoneta(sale de su plaza del parking). Vehiculos borrados: " + daoVehiculo.deleteVehiculo(new VehiculoVO("9841ASD", "Furgoneta")));
+//            System.out.println("----------Lista de Vehiculos(SIN MATRICULA 9841ASD)-------------");
             List<VehiculoVO> nuevaLista = daoVehiculo.getAll();
             nuevaLista.forEach(System.out::println);
             System.out.println("-----------------------------------------");
-
-            System.out.println("Nº personas insertadas " + daoPersona.insertCliente(listaPersonas));
-            System.out.println("-----------------------------------------");
-            System.out.println("Buscamos DNI 09113858Q: " + daoPersona.buscarDni("09113858Q"));
-            System.out.println("------------Lista de personas-------------");
-            listaPersonas.forEach(System.out::println);
+//
+            System.out.println("Nº personas insertadas " + daoCliente.insertCliente(listaPersonas));
+//            System.out.println("-----------------------------------------");
+//            System.out.println("Buscamos DNI 09113858Q: " + daoPersona.buscarDni("09113858Q"));
+//            System.out.println("------------Lista de personas-------------");
+            List<ClientesVO> listaperso = daoCliente.getAll();
+            listaperso.forEach(System.out::println);
+//          
             
-            System.out.println("plaza" + daoPlaza.insertPlaza(listaPlaza));
-            System.out.println("eliminar" + daoPlaza.deletePlaza(new PlazaVO("1", 3.25, "Turismo", "vacio", 10.0)));
-            System.out.println("------------Lista de plaza-------------");
-            listaPlaza.forEach(System.out::println);
+            System.out.println("Nº de plazas insertadas " + daoPlaza.insertPlaza(listaPlaza));
+            List<PlazaVO> listaPlaza2 = daoPlaza.getAll();
             
-            System.out.println("tickets" + daoPlaza.insertPlaza(listaPlaza));
-            System.out.println("eliminar" + daoPlaza.deletePlaza(new PlazaVO("1", 3.25, "Turismo", "vacio", 10.0)));
-            System.out.println("------------Lista de plaza-------------");
-            listaPlaza.forEach(System.out::println);
+            listaPlaza2.forEach(System.out::println);
             
+            System.out.println("Nº de tickets insetados " + daoTickets.insertTickets(listaTickets));
+            List<TicketsVO> listaTickets2 = daoTickets.getAll();
+            
+            listaTickets2.forEach(System.out::println);
+//            System.out.println("plaza" + daoPlaza.insertPlaza(listaPlaza));
+//            System.out.println("eliminar" + daoPlaza.deletePlaza(new PlazaVO("1", 3.25, "Turismo", "vacio", 10.0)));
+//            System.out.println("------------Lista de plaza-------------");
+//            listaPlaza.forEach(System.out::println);
+//            
+//            System.out.println("tickets" + daoPlaza.insertPlaza(listaPlaza));
+//            System.out.println("eliminar" + daoPlaza.deletePlaza(new PlazaVO("1", 3.25, "Turismo", "vacio", 10.0)));
+//            System.out.println("------------Lista de plaza-------------");
+//            listaPlaza.forEach(System.out::println);
 
         } catch (SQLException sqle) {
             System.out.println("No se ha podido realizar la operación:");
             System.out.println(sqle.getMessage());
+//        }catch(FileNotFoundException | UnsupportedEncodingException e){
+//            System.out.println(e);
         }
     }
 
