@@ -31,14 +31,6 @@ public class PlazaVO {
         this.precioMinuto = precioMinuto;
     }
 
-    public PlazaVO(String numeroPlaza, double tarifa, String tipoPlaza, String estado, double precioMinuto) {
-        this.numeroPlaza = numeroPlaza;
-        this.tarifa = tarifa;
-        this.tipoPlaza = tipoPlaza;
-        this.estado = estado;
-        this.precioMinuto = precioMinuto;
-    } 
-
     public PlazaVO() {
     }
 
