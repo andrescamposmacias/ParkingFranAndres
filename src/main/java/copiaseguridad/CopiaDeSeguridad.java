@@ -139,27 +139,6 @@ public class CopiaDeSeguridad {
                     seleccionArchivo = archivos[(seleccion - 1)];              
                
             }
-                }
-               
-            }
-
-            Process clientes = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Workbench 8.0 CE\\mysql.exe -u root -pandres parking clientes");
-
-            new HiloLector(clientes.getErrorStream()).start();
-
-            OutputStream osClientes = clientes.getOutputStream();
-            FileInputStream fisClientes = new FileInputStream(seleccionArchivo + "\\clientes.txt");
-            byte[] bufferClientes = new byte[1000];
-
-            int leidoClientes = fisClientes.read(bufferClientes);
-            while (leidoClientes > 0) {
-                osClientes.write(bufferClientes, 0, leidoClientes);
-                leidoClientes = fisClientes.read(bufferClientes);
-            }
-
-            osClientes.flush();
-            osClientes.close();
-            fisClientes.close();
             
             Process vehiculo = Runtime.getRuntime().exec("mysql -u andres --host=192.168.56.101 --protocol=tcp --port=3306 -pwhiz3000 parking vehiculo");
 
