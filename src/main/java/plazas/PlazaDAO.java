@@ -90,7 +90,7 @@ public class PlazaDAO implements IPlaza{
     public int insertPlaza(PlazaVO plaza) throws SQLException {
 
         int numFilas = 0;
-        String sql = "insert into plaza values (?,?,?,?,?)";
+        String sql = "insert into plaza values (?,?,?,?,?,?)";
 
         if (buscarPlaza(plaza.getNumeroPlaza()) != null) {
             
@@ -100,11 +100,12 @@ public class PlazaDAO implements IPlaza{
             // de datos. Sentencia parametrizada
             try (PreparedStatement prest = con.prepareStatement(sql)) {
 
-                prest.setString(1, plaza.getNumeroPlaza());
-                prest.setDouble(2, plaza.getTarifa());
-                prest.setString(3, plaza.getTipoPlaza());
-                prest.setString(4, plaza.getEstado());
-                prest.setDouble(5, plaza.getPrecioMinuto());               
+                prest.setInt(1, plaza.getCodigo());
+                prest.setString(2, plaza.getNumeroPlaza());
+                prest.setDouble(3, plaza.getTarifa());
+                prest.setString(4, plaza.getTipoPlaza());
+                prest.setString(5, plaza.getEstado());
+                prest.setDouble(6, plaza.getPrecioMinuto());               
 
                 numFilas = prest.executeUpdate();
             }
@@ -145,7 +146,7 @@ public class PlazaDAO implements IPlaza{
     public int updatePlaza(String numPlaza, PlazaVO plaza) throws SQLException {
 
         int numFilas = 0;
-        String sql = "update plaza set numeroPlaza = ?, tarifa = ?, tipoPlaza = ?, estado = ?, precioMinuto = ? where numeroPlaza=?";
+        String sql = "update plaza set codigo = ? numeroPlaza = ?, tarifa = ?, tipoPlaza = ?, estado = ?, precioMinuto = ? where numeroPlaza=?";
 
         if (buscarPlaza(plaza.getNumeroPlaza()) == null) {
             // La persona a actualizar no existe
@@ -157,13 +158,14 @@ public class PlazaDAO implements IPlaza{
 
                 // Establecemos los parámetros de la sentencia
                 
+                prest.setInt(1, plaza.getCodigo());
+                prest.setString(2, plaza.getNumeroPlaza());
+                prest.setDouble(3, plaza.getTarifa());
+                prest.setString(4, plaza.getTipoPlaza());
+                prest.setString(5, plaza.getEstado());
+                prest.setDouble(6, plaza.getPrecioMinuto());                            
+                prest.setString(7, numPlaza);
                 
-                prest.setString(1, plaza.getNumeroPlaza());
-                prest.setDouble(2, plaza.getTarifa());
-                prest.setString(3, plaza.getTipoPlaza());
-                prest.setString(4, plaza.getEstado());
-                prest.setDouble(5, plaza.getPrecioMinuto());                            
-
                 numFilas = prest.executeUpdate();
             }
             return numFilas;
