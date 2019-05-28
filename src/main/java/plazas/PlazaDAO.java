@@ -29,6 +29,32 @@ public class PlazaDAO implements IPlaza{
     } 
     
     @Override
+    public List<PlazaVO> getAll() throws SQLException {
+        List<PlazaVO> lista = new ArrayList<>();
+
+        try (Statement st = con.createStatement()) {
+
+            ResultSet res = st.executeQuery("select * from tickets");
+
+            while (res.next()) {
+                PlazaVO p = new PlazaVO();
+
+                p.setCodigo(res.getInt("codigo"));
+                p.setNumeroPlaza(res.getString("numeroPlaza"));
+                p.setTarifa(res.getDouble("tarifa"));
+                p.setTipoPlaza(res.getString("tipoPlaza"));
+                p.setEstado(res.getString("estado"));
+                p.setPrecioMinuto(res.getDouble("precioMinuto"));
+
+
+                lista.add(p);
+            }
+        }
+
+        return lista;
+    }
+    
+    @Override
     public PlazaVO buscarPlaza(String numPlaza) throws SQLException {
 
         ResultSet res = null;
@@ -38,7 +64,7 @@ public class PlazaDAO implements IPlaza{
 
         try (PreparedStatement prest = con.prepareStatement(sql)) {
             // Preparamos la sentencia parametrizada
-            prest.setString(2, numPlaza);
+            prest.setString(1, numPlaza);
 
             // Ejecutamos la sentencia y obtenemos las filas en el objeto ResultSet
             res = prest.executeQuery();
@@ -47,6 +73,7 @@ public class PlazaDAO implements IPlaza{
             // si existe esa pk
             if (res.first()) {
                 
+                plaza.setCodigo(res.getInt("codigo"));
                 plaza.setNumeroPlaza(res.getString("numeroPlaza"));
                 plaza.setTarifa(res.getDouble("tarifa"));
                 plaza.setTipoPlaza(res.getString("tipoPlaza"));
@@ -74,14 +101,11 @@ public class PlazaDAO implements IPlaza{
             // de datos. Sentencia parametrizada
             try (PreparedStatement prest = con.prepareStatement(sql)) {
 
-                
-                
-                
-                prest.setString(2, plaza.getNumeroPlaza());
-                prest.setDouble(3, plaza.getTarifa());
-                prest.setString(4, plaza.getTipoPlaza());
-                prest.setString(5, plaza.getEstado());
-                prest.setDouble(6, plaza.getPrecioMinuto());               
+                prest.setString(1, plaza.getNumeroPlaza());
+                prest.setDouble(2, plaza.getTarifa());
+                prest.setString(3, plaza.getTipoPlaza());
+                prest.setString(4, plaza.getEstado());
+                prest.setDouble(5, plaza.getPrecioMinuto());               
 
                 numFilas = prest.executeUpdate();
             }
@@ -111,7 +135,7 @@ public class PlazaDAO implements IPlaza{
         try (PreparedStatement prest = con.prepareStatement(sql)) {
 
             // Establecemos los parámetros de la sentencia
-            prest.setString(2, plaza.getNumeroPlaza());
+            prest.setString(1, plaza.getNumeroPlaza());
             // Ejecutamos la sentencia
             numFilas = prest.executeUpdate();
         }
@@ -135,11 +159,11 @@ public class PlazaDAO implements IPlaza{
                 // Establecemos los parámetros de la sentencia
                 
                 
-                prest.setString(2, plaza.getNumeroPlaza());
-                prest.setDouble(3, plaza.getTarifa());
-                prest.setString(4, plaza.getTipoPlaza());
-                prest.setString(5, plaza.getEstado());
-                prest.setDouble(6, plaza.getPrecioMinuto());                            
+                prest.setString(1, plaza.getNumeroPlaza());
+                prest.setDouble(2, plaza.getTarifa());
+                prest.setString(3, plaza.getTipoPlaza());
+                prest.setString(4, plaza.getEstado());
+                prest.setDouble(5, plaza.getPrecioMinuto());                            
 
                 numFilas = prest.executeUpdate();
             }
