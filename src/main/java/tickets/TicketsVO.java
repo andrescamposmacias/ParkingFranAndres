@@ -15,6 +15,7 @@ import java.time.LocalTime;
  */
 public class TicketsVO {
 
+    private int codigo;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
     private LocalTime horaEntrada;
@@ -23,6 +24,18 @@ public class TicketsVO {
     private int pin;
     private String matricula;
     private String numeroPlaza;
+
+    public TicketsVO(int codigo, LocalDate fechaEntrada, LocalDate fechaSalida, LocalTime horaEntrada, LocalTime horaSalida, double precio, int pin, String matricula, String numeroPlaza) {
+        this.codigo = codigo;
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
+        this.horaEntrada = horaEntrada;
+        this.horaSalida = horaSalida;
+        this.precio = precio;
+        this.pin = pin;
+        this.matricula = matricula;
+        this.numeroPlaza = numeroPlaza;
+    }
 
     public TicketsVO(LocalDate fechaEntrada, LocalDate fechaSalida, LocalTime horaEntrada, LocalTime horaSalida, double precio, int pin, String matricula, String numeroPlaza) {
         this.fechaEntrada = fechaEntrada;
@@ -102,9 +115,17 @@ public class TicketsVO {
         this.numeroPlaza = numeroPlaza;
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
     @Override
     public String toString() {
-        return "TicketsVO{" + "fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", precio=" + precio + ", pin=" + pin + ", matricula=" + matricula + ", numeroPlaza=" + numeroPlaza + '}';
+        return codigo + ", " +fechaEntrada + ", " +fechaSalida  + ", " +horaEntrada  + ", " +horaSalida  + ", " +precio  + ", " +pin  + ", " +matricula  + ", " +numeroPlaza;
     }
 
 }
