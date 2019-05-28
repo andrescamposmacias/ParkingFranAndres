@@ -59,7 +59,7 @@ public class ClienteDAO implements ICliente{
     }
      
      @Override
-     public ClientesVO buscarCliente(String dni, String matricula) throws SQLException {
+     public boolean buscarCliente(String dni, String matricula) throws SQLException {
 
         ResultSet res = null;
         ClientesVO cliente = new ClientesVO();
@@ -88,10 +88,10 @@ public class ClienteDAO implements ICliente{
                 cliente.setFechaFin(res.getDate("fechaFin").toLocalDate());
                 cliente.setNumeroPlaza(res.getString("numeroPlaza"));
                 cliente.setCoste(res.getDouble("coste"));
-                return cliente;
+                return true;
             }
 
-            return null;
+            return false;
         }
     }
      
@@ -101,7 +101,7 @@ public class ClienteDAO implements ICliente{
         int numFilas = 0;
         String sql = "insert into clientes values (?,?,?,?,?,?,?,?,?,?,?)";
 
-        if (buscarCliente(cliente.getDni(), cliente.getMatricula()) != null) {
+        if (buscarCliente(cliente.getDni(), cliente.getMatricula())) {
 
             return numFilas;
         } else {
@@ -161,7 +161,7 @@ public class ClienteDAO implements ICliente{
         int numFilas = 0;
         String sql = "update clientes set dni=?, matricula=?, tarjetaCredito=?, nombre=?, apellido=?, abono=?, email=?, fechaInicio=?, fechaFin=?, numeroPlaza=?, coste=? where dni=?";
 
-        if (buscarCliente(cliente.getDni(), cliente.getMatricula()) == null) {
+        if (buscarCliente(cliente.getDni(), cliente.getMatricula())) {
 
             return numFilas;
         } else {
