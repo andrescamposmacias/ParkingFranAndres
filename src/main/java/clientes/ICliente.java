@@ -32,4 +32,6 @@ public interface ICliente {
     // con los nuevos datos que traiga la persona 'nuevosDatos'
     int updateCliente (String dni, ClientesVO cliente) throws SQLException;
     
+    public int deleteCliente() throws SQLException;
+    
 }
