@@ -174,8 +174,13 @@ public class CopiaYRestauracion {
         //un String
         String linea;
         
+        daoCliente.deleteCliente();
+        daoVehiculo.deleteVehiculo();
+        daoTickets.deleteTickets();
+        daoPlaza.deletePlaza();
+        
         try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Vehiculos.txt"), "ISO-8859-1"))) {
-            daoVehiculo.deleteVehiculo();
+            
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
               
@@ -195,7 +200,7 @@ public class CopiaYRestauracion {
             }
 
         try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Clientes.txt"), "ISO-8859-1"))) {
-            daoCliente.deleteCliente();
+            
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
               
@@ -214,8 +219,28 @@ public class CopiaYRestauracion {
                 System.out.println(e);
             }
         
+        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Plaza.txt"), "ISO-8859-1"))) {
+            
+            //repite el bucle hasta que no encuentre alguna linea
+            while (datosFichero.hasNextLine()) {
+              
+                    //guarda en el String linea lo que hay en la linea del fichero
+                    linea = datosFichero.nextLine();
+
+                    //creo un array de String que la condicion sea la barra vertical
+                    tokens = linea.split(",");
+                 
+                    listaPlaza.add(new PlazaVO(Integer.parseInt(tokens[0].trim()),tokens[1].trim(),Double.parseDouble(tokens[2].trim()),tokens[3].trim(),tokens[4].trim(),Double.parseDouble(tokens[5].trim())));
+                        
+                    daoPlaza.insertPlaza(listaPlaza);
+                    }
+                  
+            }catch(FileNotFoundException | UnsupportedEncodingException e){
+                System.out.println(e);
+            }
+        
          try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Tickets.txt"), "ISO-8859-1"))) {
-            daoTickets.deleteTickets();
+            
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
               
@@ -234,25 +259,7 @@ public class CopiaYRestauracion {
                 System.out.println(e);
             }
          
-         try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Plaza.txt"), "ISO-8859-1"))) {
-            daoPlaza.deletePlaza();
-            //repite el bucle hasta que no encuentre alguna linea
-            while (datosFichero.hasNextLine()) {
-              
-                    //guarda en el String linea lo que hay en la linea del fichero
-                    linea = datosFichero.nextLine();
-
-                    //creo un array de String que la condicion sea la barra vertical
-                    tokens = linea.split(",");
-                 
-                    listaPlaza.add(new PlazaVO(Integer.parseInt(tokens[0].trim()),tokens[1].trim(),Double.parseDouble(tokens[2].trim()),tokens[3].trim(),tokens[4].trim(),Double.parseDouble(tokens[5].trim())));
-                        
-                    daoPlaza.insertPlaza(listaPlaza);
-                    }
-                  
-            }catch(FileNotFoundException | UnsupportedEncodingException e){
-                System.out.println(e);
-            }
+         
 
         } 
 
