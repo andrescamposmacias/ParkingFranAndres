@@ -8,7 +8,9 @@ package appParking;
 import java.util.Scanner;
 import clientes.ClienteDAO;
 import clientes.ClientesVO;
-import copiaseguridad.CopiaDeSeguridad;
+import copiaseguridad.CopiaYRestauracion;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -22,29 +24,22 @@ import vehiculos.VehiculoDAO;
  */
 public class Parking {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, FileNotFoundException, UnsupportedEncodingException {
         ClienteDAO daoPersona = new ClienteDAO();
         TicketsDAO daoTickets = new TicketsDAO();
         PlazaDAO daoPlaza = new PlazaDAO();
         
-        String dniRegistro;
-        String matriculaRegistro;
-        int tarjetaCreditoRegistro;
-        String nombreRegistro;
-        String apellidoRegistro;
-        String abonoRegistro;
-        String emailRegistro;
-        LocalDate hoyRegistro = LocalDate.now();
-        LocalDate finalRegistro = null;
-        String numeroPlazaRegistro;
-        int costeRegistro = 0;
+        ClientesVO abonado = new ClientesVO();
+        
 
         Scanner teclado = new Scanner(System.in);
         System.out.println("Bienvenido a HINOBEPA SL, empresa que se dedica a la gestión de parkings de todo el mundo");
         System.out.println("Si usted es ya un cliente abonado, pulse 1\n"
                 + "Si usted es un cliente no abonado, pulse 2\n"
                 + "Si usted quiere darse de alta como abonado, pulse 3\n"
-                + "Si usted es un administrador, pulse 4");
+                + "Si usted quiere modificar algun dato de abonado, pulse 4\n"
+                + "Si usted quiere darse de baja como abonado, pulse 5\n"
+                + "Si usted es un administrador, pulse 6");
         int tipoCliente = teclado.nextInt();
         try {
             switch (tipoCliente) {
@@ -80,7 +75,12 @@ public class Parking {
 
                             System.out.println("Introduzca su matricula");
                             String matriculaAbonado = teclado.nextLine();
-                            daoPersona.buscarCliente(dniAbonado, matriculaAbonado);
+                            if(daoPersona.buscarCliente(dniAbonado, matriculaAbonado)){
+                                System.out.println("Ingresando vehiculo");
+                                
+                            }else{
+                                System.out.println("El DNI o la matricua es incorrecto");
+                            }
 
 //                        case 3:
 //                            System.out.println("Subiendo persiana del salón");
@@ -104,57 +104,11 @@ public class Parking {
 //                case 2:
 //                    monthString = "February";
 //                    break;
-                case 3:
-
-                    System.out.println("Introduzca su DNI");
-                    dniRegistro = teclado.nextLine();
-
-                    System.out.println("Introduzca su matricula");
-                    matriculaRegistro = teclado.nextLine();
-
-                    System.out.println("Introduzca su Tarjeta de crédito");
-                    tarjetaCreditoRegistro = teclado.nextInt();
-
-                    teclado.nextLine();//limpiamos el buffer
-                    
-                    System.out.println("Introduzca su nombre");
-                    nombreRegistro = teclado.nextLine();
-
-                    System.out.println("Introduzca su apellido");
-                    apellidoRegistro = teclado.nextLine();
-
-                    do {
-                        System.out.println("Introduzca el tipo de abono (mensual, trimestral, semestral o anual)");
-                        abonoRegistro = teclado.nextLine();
-                    } while (!abonoRegistro.equalsIgnoreCase("mensual") && !abonoRegistro.equalsIgnoreCase("trimestral") && !abonoRegistro.equalsIgnoreCase("semestral") && !abonoRegistro.equalsIgnoreCase("anual"));
-
-                    System.out.println("Introduzca su email");
-                    emailRegistro = teclado.nextLine();
-
-                    if (abonoRegistro.equalsIgnoreCase("mensual")) {
-
-                        finalRegistro = hoyRegistro.plus(1, ChronoUnit.MONTHS);
-                        costeRegistro = 25;
-
-                    } else if (abonoRegistro.equalsIgnoreCase("semestral")) {
-
-                        finalRegistro = hoyRegistro.plus(3, ChronoUnit.MONTHS);
-                        costeRegistro = 70;
-
-                    } else if (abonoRegistro.equalsIgnoreCase("semestral")) {
-
-                        finalRegistro = hoyRegistro.plus(6, ChronoUnit.MONTHS);
-                        costeRegistro = 130;
-
-                    } else if (abonoRegistro.equalsIgnoreCase("anual")) {
-
-                        finalRegistro = hoyRegistro.plus(1, ChronoUnit.YEARS);
-                        costeRegistro = 200;
-
+                case 3:                   
+                    if(abonado.registro()){
+                        System.out.println("El cliente se ha registrado correctamente");
                     }
-
-                    numeroPlazaRegistro = "sad";
-                    daoPersona.insertCliente(new ClientesVO(dniRegistro, matriculaRegistro, tarjetaCreditoRegistro, nombreRegistro, apellidoRegistro, abonoRegistro, emailRegistro, hoyRegistro, finalRegistro, numeroPlazaRegistro, costeRegistro));
+                    break;
                 case 4:
                     System.out.println("Bienvenido administrador");
                     System.out.println("¿Qué desea realizar?");
@@ -165,19 +119,25 @@ public class Parking {
                         switch(seleccionAdmin){
                             case 1:
                                 System.out.println("Realizando una copia de seguridad");
-                                CopiaDeSeguridad.copiaSeguridad();
+                                CopiaYRestauracion.copia();
                                 System.out.println("Se ha realizado la copia de seguridad correctamente");
                                 break;
                                 
                             case 2:
                                 System.out.println("Vamos a restaurar una copia de seguridad");
-                                CopiaDeSeguridad.restauracion();
+                                CopiaYRestauracion.restaurar();
                                 System.out.println("Se ha restaurado la copia de seguridad correctamente");
                         }
                     break;
-//                case 5:
-//                    monthString = "May";
-//                    break;
+                case 5:
+                    System.out.println("Va a darse de baja");
+                    System.out.println("Introduzca su DNI");
+                    String dniBaja = teclado.nextLine();
+                    if(daoPersona.deleteCliente(dniBaja) != 0){
+                        System.out.println("Se ha dado de baja correctamente");
+                    }else{
+                        System.out.println("El DNI introducido no concuerda con ningun abonado");
+                    }
 //                case 6:
 //                    monthString = "June";
 //                    break;
@@ -206,6 +166,8 @@ public class Parking {
         } catch (SQLException sqle) {
             System.out.println("No se ha podido realizar la operación:");
             System.out.println(sqle.getMessage());
+        }catch(FileNotFoundException | UnsupportedEncodingException e){
+            System.out.println(e);
         }
 //        System.out.println(monthString);
     }
