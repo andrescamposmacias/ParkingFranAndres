@@ -82,21 +82,6 @@ public class Parking {
                                 System.out.println("El DNI o la matricua es incorrecto");
                             }
 
-//                        case 3:
-//                            System.out.println("Subiendo persiana del salón");
-//                            return Comando.SUBIR_PERSIANA_SALON;
-//
-//                        case 4:
-//                            System.out.println("Bajando persiana del salón");
-//                            return Comando.BAJAR_PERSIANA_SALON;
-//
-//                        case 5:
-//                            System.out.println("Dejando la persiana del salón a media altura");
-//                            return Comando.MEDIA_PERSIANA_SALON;
-//
-//                        case 6:
-//                            System.out.println("Conectando a camara de vigilancia del salón");
-//                            return Comando.CONSULTAR_VIGILANCIA_SALON;
 
                     }
 
