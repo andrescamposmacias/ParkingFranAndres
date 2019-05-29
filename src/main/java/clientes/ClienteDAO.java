@@ -139,7 +139,7 @@ public class ClienteDAO implements ICliente{
     }
      
      @Override
-     public int deleteCliente(ClientesVO cliente) throws SQLException {
+     public int deleteCliente(String dni) throws SQLException {
         int numFilas = 0;
 
         String sql = "delete from clientes where dni = ?";
@@ -148,7 +148,7 @@ public class ClienteDAO implements ICliente{
         try (PreparedStatement prest = con.prepareStatement(sql)) {
 
             // Establecemos los parámetros de la sentencia
-            prest.setString(1, cliente.getDni());
+            prest.setString(1, dni);
             // Ejecutamos la sentencia
             numFilas = prest.executeUpdate();
         }
