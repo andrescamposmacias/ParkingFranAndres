@@ -26,7 +26,7 @@ public interface ICliente {
     int insertCliente (List<ClientesVO> lista) throws SQLException;
     
     // Método para borrar una persona
-    int deleteCliente (ClientesVO cliente) throws SQLException;
+    int deleteCliente (String dni) throws SQLException;
     
     // Método para modificar una persona. Se modifica a la persona que tenga esa 'pk'
     // con los nuevos datos que traiga la persona 'nuevosDatos'
