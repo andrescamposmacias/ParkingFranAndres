@@ -12,11 +12,8 @@ import copiaseguridad.CopiaYRestauracion;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import plazas.PlazaDAO;
 import tickets.TicketsDAO;
-import vehiculos.VehiculoDAO;
 
 /**
  *
@@ -108,7 +105,7 @@ public class Parking {
                             } else {
                                 System.out.println("La matricula o el numero de plaza o el pin es incorrecto");
                             }
-                    
+
                             break;
 
                         case 2:
@@ -125,47 +122,46 @@ public class Parking {
                             }
                             break;
                     }
-                        case 3:
-                            if (abonado.registro()) {
-                                System.out.println("El cliente se ha registrado correctamente");
-                            }
-                            break;
-                        case 4:
-                            System.out.println("Bienvenido administrador");
-                            System.out.println("¿Qué desea realizar?");
-                            System.out.println("1-Copia de seguridad");
-                            System.out.println("2-Restaurar una copia de seguridad");
-                            int seleccionAdmin = teclado.nextInt();
-
-                            switch (seleccionAdmin) {
-                                case 1:
-                                    System.out.println("Realizando una copia de seguridad");
-                                    CopiaYRestauracion.copia();
-                                    System.out.println("Se ha realizado la copia de seguridad correctamente");
-                                    break;
-
-                                case 2:
-                                    System.out.println("Vamos a restaurar una copia de seguridad");
-                                    CopiaYRestauracion.restaurar();
-                                    System.out.println("Se ha restaurado la copia de seguridad correctamente");
-                            }
-                            break;
-                        case 5:
-                            System.out.println("Va a darse de baja");
-                            System.out.println("Introduzca su DNI");
-                            String dniBaja = teclado.nextLine();
-                            if (daoPersona.deleteCliente(dniBaja) != 0) {
-                                System.out.println("Se ha dado de baja correctamente");
-                            } else {
-                                System.out.println("El DNI introducido no concuerda con ningun abonado");
-                            }
+                case 3:
+                    if (abonado.registro()) {
+                        System.out.println("El cliente se ha registrado correctamente");
                     }
-            }catch (SQLException sqle) {
+                    break;
+                case 4:
+                    System.out.println("Bienvenido administrador");
+                    System.out.println("¿Qué desea realizar?");
+                    System.out.println("1-Copia de seguridad");
+                    System.out.println("2-Restaurar una copia de seguridad");
+                    int seleccionAdmin = teclado.nextInt();
+
+                    switch (seleccionAdmin) {
+                        case 1:
+                            System.out.println("Realizando una copia de seguridad");
+                            CopiaYRestauracion.copia();
+                            System.out.println("Se ha realizado la copia de seguridad correctamente");
+                            break;
+
+                        case 2:
+                            System.out.println("Vamos a restaurar una copia de seguridad");
+                            CopiaYRestauracion.restaurar();
+                            System.out.println("Se ha restaurado la copia de seguridad correctamente");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Va a darse de baja");
+                    System.out.println("Introduzca su DNI");
+                    String dniBaja = teclado.nextLine();
+                    if (daoPersona.deleteCliente(dniBaja) != 0) {
+                        System.out.println("Se ha dado de baja correctamente");
+                    } else {
+                        System.out.println("El DNI introducido no concuerda con ningun abonado");
+                    }
+            }
+        } catch (SQLException sqle) {
             System.out.println("No se ha podido realizar la operación:");
             System.out.println(sqle.getMessage());
-        }catch(FileNotFoundException | UnsupportedEncodingException e){
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
             System.out.println(e);
         }
-//        System.out.println(monthString);
-        }
     }
+}
