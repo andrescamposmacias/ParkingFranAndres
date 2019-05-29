@@ -15,17 +15,15 @@ public class PlazaVO {
     
     private int codigo;
     private String numeroPlaza;
-    private double tarifa;
     private String tipoPlaza;
     private String estado;
     private double precioMinuto;
 
     //constructor parametrizado
 
-    public PlazaVO(int codigo, String numeroPlaza, double tarifa, String tipoPlaza, String estado, double precioMinuto) {
+    public PlazaVO(int codigo, String numeroPlaza, String tipoPlaza, String estado, double precioMinuto) {
         this.codigo = codigo;
         this.numeroPlaza = numeroPlaza;
-        this.tarifa = tarifa;
         this.tipoPlaza = tipoPlaza;
         this.estado = estado;
         this.precioMinuto = precioMinuto;
@@ -48,14 +46,6 @@ public class PlazaVO {
 
     public void setNumeroPlaza(String numeroPlaza) {
         this.numeroPlaza = numeroPlaza;
-    }
-
-    public double getTarifa() {
-        return tarifa;
-    }
-
-    public void setTarifa(double tarifa) {
-        this.tarifa = tarifa;
     }
 
     public String getTipoPlaza() {
@@ -84,7 +74,7 @@ public class PlazaVO {
 
     @Override
     public String toString() {
-        return codigo + ", " +numeroPlaza  + ", " +tarifa  + ", " +tipoPlaza  + ", " +estado  + ", " +precioMinuto;
+        return codigo + ", " +numeroPlaza + ", " +tipoPlaza  + ", " +estado  + ", " +precioMinuto;
     }
     
 
