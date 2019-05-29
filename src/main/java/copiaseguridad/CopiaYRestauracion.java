@@ -229,8 +229,8 @@ public class CopiaYRestauracion {
 
                     //creo un array de String que la condicion sea la barra vertical
                     tokens = linea.split(",");
-                 
-                    listaPlaza.add(new PlazaVO(Integer.parseInt(tokens[0].trim()),tokens[1].trim(),Double.parseDouble(tokens[2].trim()),tokens[3].trim(),tokens[4].trim(),Double.parseDouble(tokens[5].trim())));
+
+                    listaPlaza.add(new PlazaVO(Integer.parseInt(tokens[0].trim()),tokens[1].trim(),tokens[2].trim(),tokens[3].trim(),Double.parseDouble(tokens[4].trim())));
                         
                     daoPlaza.insertPlaza(listaPlaza);
                     }
