@@ -85,7 +85,7 @@ public class Parking {
 
                     break;
                 case 2:
-                    System.out.println("Bienvenido al portal de gestión de su abono del parking, por favor, introduzca su nombre completo: ");
+                    System.out.println("Bienvenido al portal de gestión de su vehiculo del parking, por favor, introduzca su nombre completo: ");
                     String nombreNoAbonado = teclado.nextLine();
                     System.out.println("Bienvenido " + nombreNoAbonado + ", ¿Qué desea hacer?");
                     System.out.println("1. Retirar vehículo del parking");
