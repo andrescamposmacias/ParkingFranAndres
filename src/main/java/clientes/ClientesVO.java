@@ -5,7 +5,12 @@
  */
 package clientes;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Scanner;
+import vehiculos.VehiculoDAO;
+import vehiculos.VehiculoVO;
 
 /**
  *
@@ -132,7 +137,97 @@ public class ClientesVO {
 
     @Override
     public String toString() {
-        return dni + ", " +matricula + ", " +tarjetaCredito + ", " +nombre  + ", " +apellido + ", " +tipoAbono  + ", " +email +  ", " +fechaInicio  + ", " +fechaFin + ", " +numeroPlaza  + ", " +coste;
+        return dni + ", " + matricula + ", " + tarjetaCredito + ", " + nombre + ", " + apellido + ", " + tipoAbono + ", " + email + ", " + fechaInicio + ", " + fechaFin + ", " + numeroPlaza + ", " + coste;
+    }
+
+    public boolean registro() throws SQLException {
+        Scanner teclado = new Scanner(System.in);
+
+        ClienteDAO comprobacion = new ClienteDAO();
+        VehiculoDAO insertarVehiculo = new VehiculoDAO();
+
+        //atributos vehiculo
+        String matriculaRegistro;
+        String tipoVehiculo;
+
+        //atributos cliente
+        String dniRegistro;
+        int tarjetaCreditoRegistro;
+        String nombreRegistro;
+        String apellidoRegistro;
+        String abonoRegistro;
+        String emailRegistro;
+        LocalDate hoyRegistro = LocalDate.now();
+        LocalDate finalRegistro = null;
+        String numeroPlazaRegistro;
+        int costeRegistro = 0;
+
+        System.out.println("Introduzca su DNI");
+        dniRegistro = teclado.nextLine();
+
+        System.out.println("Introduzca su matricula");
+        matriculaRegistro = teclado.nextLine();
+
+        System.out.println("Introduce el tipo de vehículo (Turismo, Motocicleta o Caravana)");
+        tipoVehiculo = teclado.nextLine();
+
+        System.out.println("Introduzca su Tarjeta de crédito");
+        tarjetaCreditoRegistro = teclado.nextInt();
+
+        teclado.nextLine();//limpiamos el buffer
+
+        System.out.println("Introduzca su nombre");
+        nombreRegistro = teclado.nextLine();
+
+        System.out.println("Introduzca su apellido");
+        apellidoRegistro = teclado.nextLine();
+
+        do {
+            System.out.println("Introduzca el tipo de abono (mensual, trimestral, semestral o anual)");
+            abonoRegistro = teclado.nextLine();
+        } while (!abonoRegistro.equalsIgnoreCase("mensual") && !abonoRegistro.equalsIgnoreCase("trimestral") && !abonoRegistro.equalsIgnoreCase("semestral") && !abonoRegistro.equalsIgnoreCase("anual"));
+
+        System.out.println("Introduzca su email");
+        emailRegistro = teclado.nextLine();
+
+        if (abonoRegistro.equalsIgnoreCase("mensual")) {
+
+            finalRegistro = hoyRegistro.plus(1, ChronoUnit.MONTHS);
+            costeRegistro = 25;
+
+        } else if (abonoRegistro.equalsIgnoreCase("semestral")) {
+
+            finalRegistro = hoyRegistro.plus(3, ChronoUnit.MONTHS);
+            costeRegistro = 70;
+
+        } else if (abonoRegistro.equalsIgnoreCase("semestral")) {
+
+            finalRegistro = hoyRegistro.plus(6, ChronoUnit.MONTHS);
+            costeRegistro = 130;
+
+        } else if (abonoRegistro.equalsIgnoreCase("anual")) {
+
+            finalRegistro = hoyRegistro.plus(1, ChronoUnit.YEARS);
+            costeRegistro = 200;
+
+        }
+
+        numeroPlazaRegistro = "sad";
+        try {
+            if (comprobacion.buscarCliente(dniRegistro, matriculaRegistro)) {
+                System.out.println("El cliente que ha introducido ya existe");
+                return false;
+            } else {
+                ClientesVO abonado = new ClientesVO(dniRegistro, matriculaRegistro, tarjetaCreditoRegistro, nombreRegistro, apellidoRegistro, abonoRegistro, emailRegistro, hoyRegistro, finalRegistro, numeroPlazaRegistro, costeRegistro);
+                insertarVehiculo.insertVehiculo(new VehiculoVO(matriculaRegistro, tipoVehiculo));
+                comprobacion.insertCliente(abonado);
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 
 }
