@@ -28,9 +28,8 @@ public class Parking {
         ClienteDAO daoPersona = new ClienteDAO();
         TicketsDAO daoTickets = new TicketsDAO();
         PlazaDAO daoPlaza = new PlazaDAO();
-        
+
         ClientesVO abonado = new ClientesVO();
-        
 
         Scanner teclado = new Scanner(System.in);
         System.out.println("Bienvenido a HINOBEPA SL, empresa que se dedica a la gestión de parkings de todo el mundo");
@@ -57,31 +56,30 @@ public class Parking {
 
                             System.out.println("Introduzca su matricula");
                             String matriculaRetirado = teclado.nextLine();
-                            
+
                             System.out.println("Introduzca su pin");
                             int pinRetirado = teclado.nextInt();
-                            
-                            if(daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)){
+
+                            if (daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)) {
                                 System.out.println("Retirando vehiculo");
                                 daoPlaza.updatePlazaAbonadoRetirado(numeroPlazaRetirado);
-                            }else{
+                            } else {
                                 System.out.println("La matricula o el numero de plaza o el pin es incorrecto");
                             }
                             break;
-                            
+
                         case 2:
                             System.out.println("Introduzca su DNI");
                             String dniAbonado = teclado.nextLine();
 
                             System.out.println("Introduzca su matricula");
                             String matriculaAbonado = teclado.nextLine();
-                            if(daoPersona.buscarCliente(dniAbonado, matriculaAbonado)){
+                            if (daoPersona.buscarCliente(dniAbonado, matriculaAbonado)) {
                                 System.out.println("Ingresando vehiculo");
-                                
-                            }else{
+
+                            } else {
                                 System.out.println("El DNI o la matricua es incorrecto");
                             }
-
 
                     }
 
@@ -100,65 +98,67 @@ public class Parking {
 
                             System.out.println("Introduzca su matricula");
                             String matriculaRetirado = teclado.nextLine();
-                            
+
                             System.out.println("Introduzca su pin");
                             int pinRetirado = teclado.nextInt();
-                            
-                            if(daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)){
+
+                            if (daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)) {
                                 System.out.println("Retirando vehiculo");
                                 daoPlaza.updatePlazaAbonadoRetirado(numeroPlazaRetirado);
-                            }else{
+                            } else {
                                 System.out.println("La matricula o el numero de plaza o el pin es incorrecto");
                             }
+                    
                             break;
-                            
+
                         case 2:
                             System.out.println("Introduzca su DNI");
                             String dniAbonado = teclado.nextLine();
 
                             System.out.println("Introduzca su matricula");
                             String matriculaAbonado = teclado.nextLine();
-                            if(daoPersona.buscarCliente(dniAbonado, matriculaAbonado)){
+                            if (daoPersona.buscarCliente(dniAbonado, matriculaAbonado)) {
                                 System.out.println("Ingresando vehiculo");
-                                
-                            }else{
+
+                            } else {
                                 System.out.println("El DNI o la matricua es incorrecto");
                             }
-                    break;
-                case 3:                   
-                    if(abonado.registro()){
-                        System.out.println("El cliente se ha registrado correctamente");
+                            break;
                     }
-                    break;
-                case 4:
-                    System.out.println("Bienvenido administrador");
-                    System.out.println("¿Qué desea realizar?");
-                    System.out.println("1-Copia de seguridad");
-                    System.out.println("2-Restaurar una copia de seguridad");
-                    int seleccionAdmin = teclado.nextInt();
-                        
-                        switch(seleccionAdmin){
-                            case 1:
-                                System.out.println("Realizando una copia de seguridad");
-                                CopiaYRestauracion.copia();
-                                System.out.println("Se ha realizado la copia de seguridad correctamente");
-                                break;
-                                
-                            case 2:
-                                System.out.println("Vamos a restaurar una copia de seguridad");
-                                CopiaYRestauracion.restaurar();
-                                System.out.println("Se ha restaurado la copia de seguridad correctamente");
-                        }
-                    break;
-                case 5:
-                    System.out.println("Va a darse de baja");
-                    System.out.println("Introduzca su DNI");
-                    String dniBaja = teclado.nextLine();
-                    if(daoPersona.deleteCliente(dniBaja) != 0){
-                        System.out.println("Se ha dado de baja correctamente");
-                    }else{
-                        System.out.println("El DNI introducido no concuerda con ningun abonado");
-                    }
+                        case 3:
+                            if (abonado.registro()) {
+                                System.out.println("El cliente se ha registrado correctamente");
+                            }
+                            break;
+                        case 4:
+                            System.out.println("Bienvenido administrador");
+                            System.out.println("¿Qué desea realizar?");
+                            System.out.println("1-Copia de seguridad");
+                            System.out.println("2-Restaurar una copia de seguridad");
+                            int seleccionAdmin = teclado.nextInt();
+
+                            switch (seleccionAdmin) {
+                                case 1:
+                                    System.out.println("Realizando una copia de seguridad");
+                                    CopiaYRestauracion.copia();
+                                    System.out.println("Se ha realizado la copia de seguridad correctamente");
+                                    break;
+
+                                case 2:
+                                    System.out.println("Vamos a restaurar una copia de seguridad");
+                                    CopiaYRestauracion.restaurar();
+                                    System.out.println("Se ha restaurado la copia de seguridad correctamente");
+                            }
+                            break;
+                        case 5:
+                            System.out.println("Va a darse de baja");
+                            System.out.println("Introduzca su DNI");
+                            String dniBaja = teclado.nextLine();
+                            if (daoPersona.deleteCliente(dniBaja) != 0) {
+                                System.out.println("Se ha dado de baja correctamente");
+                            } else {
+                                System.out.println("El DNI introducido no concuerda con ningun abonado");
+                            }
 //                case 6:
 //                    monthString = "June";
 //                    break;
@@ -183,14 +183,13 @@ public class Parking {
 //                default:
 //                    monthString = "Invalid month";
 //                    break;
-            }
-        } catch (SQLException sqle) {
+                    }
+            }catch (SQLException sqle) {
             System.out.println("No se ha podido realizar la operación:");
             System.out.println(sqle.getMessage());
         }catch(FileNotFoundException | UnsupportedEncodingException e){
             System.out.println(e);
         }
 //        System.out.println(monthString);
+        }
     }
-
-}
