@@ -101,9 +101,45 @@ public class Parking {
                     }
 
                     break;
-//                case 2:
-//                    monthString = "February";
-//                    break;
+                case 2:
+                    System.out.println("Bienvenido al portal de gestión de su abono del parking, por favor, introduzca su nombre completo: ");
+                    String nombreNoAbonado = teclado.nextLine();
+                    System.out.println("Bienvenido " + nombreNoAbonado + ", ¿Qué desea hacer?");
+                    System.out.println("1. Retirar vehículo del parking");
+                    System.out.println("2. Introducir vehículo en el parking");
+                    int eleccionNoAbonado = teclado.nextInt();
+                    switch (eleccionNoAbonado) {
+                        case 1:
+                            System.out.println("Introduzca su numero de la plaza");
+                            String numeroPlazaRetirado = teclado.nextLine();
+
+                            System.out.println("Introduzca su matricula");
+                            String matriculaRetirado = teclado.nextLine();
+                            
+                            System.out.println("Introduzca su pin");
+                            int pinRetirado = teclado.nextInt();
+                            
+                            if(daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)){
+                                System.out.println("Retirando vehiculo");
+                                daoPlaza.updatePlazaAbonadoRetirado(numeroPlazaRetirado);
+                            }else{
+                                System.out.println("La matricula o el numero de plaza o el pin es incorrecto");
+                            }
+                            break;
+                            
+                        case 2:
+                            System.out.println("Introduzca su DNI");
+                            String dniAbonado = teclado.nextLine();
+
+                            System.out.println("Introduzca su matricula");
+                            String matriculaAbonado = teclado.nextLine();
+                            if(daoPersona.buscarCliente(dniAbonado, matriculaAbonado)){
+                                System.out.println("Ingresando vehiculo");
+                                
+                            }else{
+                                System.out.println("El DNI o la matricua es incorrecto");
+                            }
+                    break;
                 case 3:                   
                     if(abonado.registro()){
                         System.out.println("El cliente se ha registrado correctamente");
