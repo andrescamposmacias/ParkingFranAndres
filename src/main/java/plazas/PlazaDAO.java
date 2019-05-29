@@ -41,7 +41,6 @@ public class PlazaDAO implements IPlaza{
 
                 p.setCodigo(res.getInt("codigo"));
                 p.setNumeroPlaza(res.getString("numeroPlaza"));
-                p.setTarifa(res.getDouble("tarifa"));
                 p.setTipoPlaza(res.getString("tipoPlaza"));
                 p.setEstado(res.getString("estado"));
                 p.setPrecioMinuto(res.getDouble("precioMinuto"));
@@ -74,7 +73,6 @@ public class PlazaDAO implements IPlaza{
                 
                 plaza.setCodigo(res.getInt("codigo"));
                 plaza.setNumeroPlaza(res.getString("numeroPlaza"));
-                plaza.setTarifa(res.getDouble("tarifa"));
                 plaza.setTipoPlaza(res.getString("tipoPlaza"));
                 plaza.setEstado(res.getString("estado"));
                 plaza.setPrecioMinuto(res.getDouble("precioMinuto"));
@@ -90,7 +88,7 @@ public class PlazaDAO implements IPlaza{
     public int insertPlaza(PlazaVO plaza) throws SQLException {
 
         int numFilas = 0;
-        String sql = "insert into plaza values (?,?,?,?,?,?)";
+        String sql = "insert into plaza values (?,?,?,?,?)";
 
         if (buscarPlaza(plaza.getNumeroPlaza()) != null) {
             
@@ -102,10 +100,9 @@ public class PlazaDAO implements IPlaza{
 
                 prest.setInt(1, plaza.getCodigo());
                 prest.setString(2, plaza.getNumeroPlaza());
-                prest.setDouble(3, plaza.getTarifa());
-                prest.setString(4, plaza.getTipoPlaza());
-                prest.setString(5, plaza.getEstado());
-                prest.setDouble(6, plaza.getPrecioMinuto());               
+                prest.setString(3, plaza.getTipoPlaza());
+                prest.setString(4, plaza.getEstado());
+                prest.setDouble(5, plaza.getPrecioMinuto());               
 
                 numFilas = prest.executeUpdate();
             }
@@ -146,7 +143,7 @@ public class PlazaDAO implements IPlaza{
     public int updatePlaza(String numPlaza, PlazaVO plaza) throws SQLException {
 
         int numFilas = 0;
-        String sql = "update plaza set codigo = ? numeroPlaza = ?, tarifa = ?, tipoPlaza = ?, estado = ?, precioMinuto = ? where numeroPlaza=?";
+        String sql = "update plaza set codigo = ? numeroPlaza = ?, tipoPlaza = ?, estado = ?, precioMinuto = ? where numeroPlaza=?";
 
         if (buscarPlaza(plaza.getNumeroPlaza()) == null) {
             // La persona a actualizar no existe
@@ -160,11 +157,10 @@ public class PlazaDAO implements IPlaza{
                 
                 prest.setInt(1, plaza.getCodigo());
                 prest.setString(2, plaza.getNumeroPlaza());
-                prest.setDouble(3, plaza.getTarifa());
-                prest.setString(4, plaza.getTipoPlaza());
-                prest.setString(5, plaza.getEstado());
-                prest.setDouble(6, plaza.getPrecioMinuto());                            
-                prest.setString(7, numPlaza);
+                prest.setString(3, plaza.getTipoPlaza());
+                prest.setString(4, plaza.getEstado());
+                prest.setDouble(5, plaza.getPrecioMinuto());                            
+                prest.setString(6, numPlaza);
                 
                 numFilas = prest.executeUpdate();
             }
