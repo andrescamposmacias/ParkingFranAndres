@@ -159,30 +159,6 @@ public class Parking {
                             } else {
                                 System.out.println("El DNI introducido no concuerda con ningun abonado");
                             }
-//                case 6:
-//                    monthString = "June";
-//                    break;
-//                case 7:
-//                    monthString = "July";
-//                    break;
-//                case 8:
-//                    monthString = "August";
-//                    break;
-//                case 9:
-//                    monthString = "September";
-//                    break;
-//                case 10:
-//                    monthString = "October";
-//                    break;
-//                case 11:
-//                    monthString = "November";
-//                    break;
-//                case 12:
-//                    monthString = "December";
-//                    break;
-//                default:
-//                    monthString = "Invalid month";
-//                    break;
                     }
             }catch (SQLException sqle) {
             System.out.println("No se ha podido realizar la operación:");
