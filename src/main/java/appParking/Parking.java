@@ -62,7 +62,7 @@ public class Parking {
                                 System.out.println("Retirando vehiculo");
                                 daoPlaza.updatePlazaAbonadoRetirado(numeroPlazaRetirado);
                             } else {
-                                System.out.println("La matricula o el numero de plaza o el pin es incorrecto");
+                                System.out.println("Algún dato introducido es incorrecto");
                             }
                             break;
 
@@ -76,7 +76,7 @@ public class Parking {
                                 System.out.println("Ingresando vehiculo");
 
                             } else {
-                                System.out.println("El DNI o la matricua es incorrecto");
+                                System.out.println("Algún dato introducido es incorrecto");
                             }
 
                     }
