@@ -131,6 +131,7 @@ public class Parking {
                     }
                     break;
                 case 4:
+                    teclado.nextLine();
                     System.out.println("Procediendo a la modificación de sus datos");
                     System.out.println("Por favor, introduzca su nombre");
                     String nombreActualizar = teclado.nextLine();
