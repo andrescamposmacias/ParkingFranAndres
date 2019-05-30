@@ -13,7 +13,6 @@ import java.time.LocalDate;
  */
 public class PlazaVO {
     
-    private int codigo;
     private String numeroPlaza;
     private String tipoPlaza;
     private String estado;
@@ -21,8 +20,7 @@ public class PlazaVO {
 
     //constructor parametrizado
 
-    public PlazaVO(int codigo, String numeroPlaza, String tipoPlaza, String estado, double precioMinuto) {
-        this.codigo = codigo;
+    public PlazaVO(String numeroPlaza, String tipoPlaza, String estado, double precioMinuto) {
         this.numeroPlaza = numeroPlaza;
         this.tipoPlaza = tipoPlaza;
         this.estado = estado;
@@ -30,14 +28,6 @@ public class PlazaVO {
     }
 
     public PlazaVO() {
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
     }
 
     public String getNumeroPlaza() {
@@ -74,7 +64,7 @@ public class PlazaVO {
 
     @Override
     public String toString() {
-        return codigo + ", " +numeroPlaza + ", " +tipoPlaza  + ", " +estado  + ", " +precioMinuto;
+        return numeroPlaza + ", " +tipoPlaza  + ", " +estado  + ", " +precioMinuto;
     }
     
 
