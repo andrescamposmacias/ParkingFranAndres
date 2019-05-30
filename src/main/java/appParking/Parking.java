@@ -156,6 +156,27 @@ public class Parking {
                     } else {
                         System.out.println("El DNI introducido no concuerda con ningun abonado");
                     }
+                    break;
+                case 6:
+                    System.out.println("Bienvenido administrador");
+                    System.out.println("¿Qué desea realizar?");
+                    System.out.println("1-Copia de seguridad");
+                    System.out.println("2-Restaurar una copia de seguridad");
+                    int seleccionAdmin = teclado.nextInt();
+
+                    switch (seleccionAdmin) {
+                        case 1:
+                            System.out.println("Realizando una copia de seguridad");
+                            CopiaYRestauracion.copia();
+                            System.out.println("Se ha realizado la copia de seguridad correctamente");
+                            break;
+
+                        case 2:
+                            System.out.println("Vamos a restaurar una copia de seguridad");
+                            CopiaYRestauracion.restaurar();
+                            System.out.println("Se ha restaurado la copia de seguridad correctamente");
+                    }
+                    break;
             }
         } catch (SQLException sqle) {
             System.out.println("No se ha podido realizar la operación:");
