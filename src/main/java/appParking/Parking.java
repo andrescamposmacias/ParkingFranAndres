@@ -40,6 +40,7 @@ public class Parking {
         try {
             switch (tipoCliente) {
                 case 1:
+                    teclado.nextLine(); //Limpiamos el buffer
                     System.out.println("Bienvenido al portal de gestión de su abono del parking, por favor, introduzca su nombre completo: ");
                     String nombreAbonado = teclado.nextLine();
                     System.out.println("Bienvenido " + nombreAbonado + ", ¿Qué desea hacer?");
