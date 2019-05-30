@@ -131,7 +131,12 @@ public class Parking {
                     }
                     break;
                 case 4:
-                    System.out.println("Modifica datos del usuario");
+                    System.out.println("Procediendo a la modificación de sus datos");
+                    System.out.println("Por favor, introduzca su nombre");
+                    String nombreActualizar = teclado.nextLine();
+                    daoPersona.updateCliente(nombreActualizar, abonado);
+                    System.out.println("Datos actualizados");
+                    
                     break;
                 case 5:
                     System.out.println("Procediendo a darle de baja");
