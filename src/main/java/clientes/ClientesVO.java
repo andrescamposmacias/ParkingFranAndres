@@ -5,10 +5,16 @@
  */
 package clientes;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Random;
 import java.util.Scanner;
+import plazas.PlazaDAO;
 import vehiculos.VehiculoDAO;
 import vehiculos.VehiculoVO;
 
@@ -29,8 +35,9 @@ public class ClientesVO {
     private LocalDate fechaFin;
     private String numeroPlaza;
     private double coste;
+    private int pin;
 
-    public ClientesVO(String dni, String matricula, int tarjetaCredito, String nombre, String apellido, String tipoAbono, String email, LocalDate fechaInicio, LocalDate fechaFin, String numeroPlaza, double coste) {
+    public ClientesVO(String dni, String matricula, int tarjetaCredito, String nombre, String apellido, String tipoAbono, String email, LocalDate fechaInicio, LocalDate fechaFin, String numeroPlaza, double coste, int pin) {
         this.dni = dni;
         this.matricula = matricula;
         this.tarjetaCredito = tarjetaCredito;
@@ -42,6 +49,7 @@ public class ClientesVO {
         this.fechaFin = fechaFin;
         this.numeroPlaza = numeroPlaza;
         this.coste = coste;
+        this.pin = pin;
     }
 
     public ClientesVO() {
@@ -135,9 +143,47 @@ public class ClientesVO {
         this.coste = coste;
     }
 
+    public int getPin() {
+        return pin;
+    }
+
+    public void setPin(int pin) {
+        this.pin = pin;
+    }
+
     @Override
     public String toString() {
-        return dni + ", " + matricula + ", " + tarjetaCredito + ", " + nombre + ", " + apellido + ", " + tipoAbono + ", " + email + ", " + fechaInicio + ", " + fechaFin + ", " + numeroPlaza + ", " + coste;
+        return dni + "," + matricula + "," + tarjetaCredito + "," + nombre + "," + apellido + "," + tipoAbono + "," + email + "," + fechaInicio + "," + fechaFin + "," + numeroPlaza + "," + coste + "," + pin;
+    }
+    
+    private int generacionPin(String dni) throws SQLException {
+        Random r = new Random();
+        
+        int pin = r.nextInt(999999-100000+1)+100000;
+        
+        String pinAbonado = String.valueOf(pin);
+        
+        File archivoBackup = new File("pinesAbonados");
+        archivoBackup.mkdir();
+        
+        try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackup + "\\" + dni + ".txt"))) {
+
+
+                    // Usamos metodo write() para escribir en el buffer
+                    flujo.write(pinAbonado);
+
+                    // Metodo newLine() añade línea en blanco
+                    flujo.newLine();
+
+
+                // Metodo flush() guarda cambios en disco 
+                flujo.flush();
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        
+        return pin;
     }
 
     public boolean registro() throws SQLException {
@@ -145,6 +191,7 @@ public class ClientesVO {
 
         ClienteDAO comprobacion = new ClienteDAO();
         VehiculoDAO insertarVehiculo = new VehiculoDAO();
+        PlazaDAO plaza = new PlazaDAO();
 
         //atributos vehiculo
         String matriculaRegistro;
@@ -160,16 +207,51 @@ public class ClientesVO {
         LocalDate hoyRegistro = LocalDate.now();
         LocalDate finalRegistro = null;
         String numeroPlazaRegistro;
-        int costeRegistro = 0;
-
-        System.out.println("Introduzca su DNI");
-        dniRegistro = teclado.nextLine();
+        int costeRegistro = 0;   
 
         System.out.println("Introduzca su matricula");
         matriculaRegistro = teclado.nextLine();
 
-        System.out.println("Introduce el tipo de vehículo (Turismo, Motocicleta o Caravana)");
-        tipoVehiculo = teclado.nextLine();
+        numeroPlazaRegistro = "NoAsignado";
+        do {
+            System.out.println("Introduce el tipo de vehículo (Turismo, Motocicleta o Caravana)");
+            tipoVehiculo = teclado.nextLine();
+        } while (!tipoVehiculo.equalsIgnoreCase("Turismo") && !tipoVehiculo.equalsIgnoreCase("Motocicleta") && !tipoVehiculo.equalsIgnoreCase("Caravana"));
+        
+        if(tipoVehiculo.equalsIgnoreCase("Turismo")){
+            if(plaza.plazaTurismoLibre().equalsIgnoreCase("0")){
+                System.out.println("Lo siento no quedan plazas de turismo");
+                return false;
+            }else{
+                numeroPlazaRegistro = plaza.sacarNumeroPlazaTurismo();
+                plaza.updatePlazaAbonadoRetirado(numeroPlazaRegistro);
+            }
+        }
+        
+        if(tipoVehiculo.equalsIgnoreCase("Motocicleta")){
+            if(plaza.plazaMotocicletaLibre().equalsIgnoreCase("0")){
+                System.out.println("Lo siento no quedan plazas de Motocicleta");
+                return false;
+            }else{
+                numeroPlazaRegistro = plaza.sacarNumeroPlazaMotocicleta();
+                plaza.updatePlazaAbonadoRetirado(numeroPlazaRegistro);
+            }
+        }
+        
+        if(tipoVehiculo.equalsIgnoreCase("Caravana")){
+            if(plaza.plazaCaravanaLibre().equalsIgnoreCase("0")){
+                System.out.println("Lo siento no quedan plazas de Caravana");
+                return false;
+            }else{
+                numeroPlazaRegistro = plaza.sacarNumeroPlazaCaravana();
+                plaza.updatePlazaAbonadoRetirado(numeroPlazaRegistro);
+            }
+        }
+
+        System.out.println("Introduzca su DNI");
+        dniRegistro = teclado.nextLine();
+        
+        int pin = generacionPin(dniRegistro);
 
         System.out.println("Introduzca su Tarjeta de crédito");
         tarjetaCreditoRegistro = teclado.nextInt();
@@ -195,7 +277,7 @@ public class ClientesVO {
             finalRegistro = hoyRegistro.plus(1, ChronoUnit.MONTHS);
             costeRegistro = 25;
 
-        } else if (abonoRegistro.equalsIgnoreCase("semestral")) {
+        } else if (abonoRegistro.equalsIgnoreCase("trimestral")) {
 
             finalRegistro = hoyRegistro.plus(3, ChronoUnit.MONTHS);
             costeRegistro = 70;
@@ -212,13 +294,12 @@ public class ClientesVO {
 
         }
 
-        numeroPlazaRegistro = "sad";
         try {
-            if (comprobacion.buscarCliente(dniRegistro, matriculaRegistro)) {
+            if (comprobacion.buscarCliente(dniRegistro, matriculaRegistro)!=null) {
                 System.out.println("El cliente que ha introducido ya existe");
                 return false;
             } else {
-                ClientesVO abonado = new ClientesVO(dniRegistro, matriculaRegistro, tarjetaCreditoRegistro, nombreRegistro, apellidoRegistro, abonoRegistro, emailRegistro, hoyRegistro, finalRegistro, numeroPlazaRegistro, costeRegistro);
+                ClientesVO abonado = new ClientesVO(dniRegistro, matriculaRegistro, tarjetaCreditoRegistro, nombreRegistro, apellidoRegistro, abonoRegistro, emailRegistro, hoyRegistro, finalRegistro, numeroPlazaRegistro, costeRegistro, pin);
                 insertarVehiculo.insertVehiculo(new VehiculoVO(matriculaRegistro, tipoVehiculo));
                 comprobacion.insertCliente(abonado);
                 return true;
@@ -229,5 +310,7 @@ public class ClientesVO {
         }
         return false;
     }
+
+    
 
 }
