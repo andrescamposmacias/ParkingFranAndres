@@ -20,15 +20,15 @@ import conexion.Conexion;
  *
  * @author andres
  */
-public class ClienteDAO implements ICliente{
-    
-     private Connection con = null;
-     
-     public ClienteDAO() {
+public class ClienteDAO implements ICliente {
+
+    private Connection con = null;
+
+    public ClienteDAO() {
         con = Conexion.getInstance();
     }
-     
-     @Override
+
+    @Override
     public List<ClientesVO> getAll() throws SQLException {
         List<ClientesVO> lista = new ArrayList<>();
 
@@ -37,8 +37,8 @@ public class ClienteDAO implements ICliente{
             ResultSet res = st.executeQuery("select * from clientes");
 
             while (res.next()) {
-                ClientesVO p = new ClientesVO();       
-         
+                ClientesVO p = new ClientesVO();
+
                 p.setDni(res.getString("dni"));
                 p.setMatricula(res.getString("matricula"));
                 p.setTarjetaCredito(res.getInt("tarjetaCredito"));
@@ -50,21 +50,21 @@ public class ClienteDAO implements ICliente{
                 p.setFechaFin(res.getDate("fechaFin").toLocalDate());
                 p.setNumeroPlaza(res.getString("numeroPlaza"));
                 p.setCoste(res.getDouble("coste"));
-
+                p.setPin(res.getInt("pin"));
                 lista.add(p);
             }
         }
 
         return lista;
     }
-     
-     @Override
-     public boolean buscarCliente(String dni, String matricula) throws SQLException {
+
+    @Override
+    public String buscarCliente(String dni, String matricula) throws SQLException {
+        String numeroPlaza;
 
         ResultSet res = null;
-        ClientesVO cliente = new ClientesVO();
 
-        String sql = "select * from clientes where dni=? and matricula=?";
+        String sql = "select numeroPlaza from clientes where dni=? and matricula=?";
 
         try (PreparedStatement prest = con.prepareStatement(sql)) {
 
@@ -73,41 +73,29 @@ public class ClienteDAO implements ICliente{
 
             res = prest.executeQuery();
 
-
-
             if (res.first()) {
-                
-                cliente.setDni(res.getString("dni"));
-                cliente.setMatricula(res.getString("matricula"));
-                cliente.setTarjetaCredito(res.getInt("tarjetaCredito"));
-                cliente.setNombre(res.getString("nombre"));
-                cliente.setApellido(res.getString("apellido"));
-                cliente.setTipoAbono(res.getString("abono"));
-                cliente.setEmail(res.getString("email"));
-                cliente.setFechaInicio(res.getDate("fechaInicio").toLocalDate());
-                cliente.setFechaFin(res.getDate("fechaFin").toLocalDate());
-                cliente.setNumeroPlaza(res.getString("numeroPlaza"));
-                cliente.setCoste(res.getDouble("coste"));
-                return true;
+
+                numeroPlaza = res.getString(1);
+                return numeroPlaza;
             }
 
-            return false;
+            return null;
         }
     }
-     
-     @Override
-     public int insertCliente(ClientesVO cliente) throws SQLException {
+
+    @Override
+    public int insertCliente(ClientesVO cliente) throws SQLException {
 
         int numFilas = 0;
-        String sql = "insert into clientes values (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into clientes values (?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        if (buscarCliente(cliente.getDni(), cliente.getMatricula())) {
+        if (buscarCliente(cliente.getDni(), cliente.getMatricula()) != null) {
 
             return numFilas;
         } else {
 
             try (PreparedStatement prest = con.prepareStatement(sql)) {
-                
+
                 prest.setString(1, cliente.getDni());
                 prest.setString(2, cliente.getMatricula());
                 prest.setInt(3, cliente.getTarjetaCredito());
@@ -119,6 +107,7 @@ public class ClienteDAO implements ICliente{
                 prest.setDate(9, Date.valueOf(cliente.getFechaFin()));
                 prest.setString(10, cliente.getNumeroPlaza());
                 prest.setDouble(11, cliente.getCoste());
+                prest.setInt(12, cliente.getPin());
 
                 numFilas = prest.executeUpdate();
             }
@@ -126,9 +115,9 @@ public class ClienteDAO implements ICliente{
         }
 
     }
-     
-     @Override
-     public int insertCliente(List<ClientesVO> lista) throws SQLException {
+
+    @Override
+    public int insertCliente(List<ClientesVO> lista) throws SQLException {
         int numFilas = 0;
 
         for (ClientesVO tmp : lista) {
@@ -137,9 +126,9 @@ public class ClienteDAO implements ICliente{
 
         return numFilas;
     }
-     
-     @Override
-     public int deleteCliente(String dni) throws SQLException {
+
+    @Override
+    public int deleteCliente(String dni) throws SQLException {
         int numFilas = 0;
 
         String sql = "delete from clientes where dni = ?";
@@ -154,20 +143,20 @@ public class ClienteDAO implements ICliente{
         }
         return numFilas;
     }
-     
-     @Override
-     public int updateCliente(String dni, ClientesVO cliente) throws SQLException {
-         
+
+    @Override
+    public int updateCliente(String dni, ClientesVO cliente) throws SQLException {
+
         int numFilas = 0;
         String sql = "update clientes set dni=?, matricula=?, tarjetaCredito=?, nombre=?, apellido=?, abono=?, email=?, fechaInicio=?, fechaFin=?, numeroPlaza=?, coste=? where dni=?";
 
-        if (buscarCliente(cliente.getDni(), cliente.getMatricula())) {
+        if (buscarCliente(cliente.getDni(), cliente.getMatricula()) == null) {
 
             return numFilas;
         } else {
 
             try (PreparedStatement prest = con.prepareStatement(sql)) {
-                
+
                 prest.setString(1, cliente.getDni());
                 prest.setString(2, cliente.getMatricula());
                 prest.setInt(3, cliente.getTarjetaCredito());
@@ -186,8 +175,8 @@ public class ClienteDAO implements ICliente{
             return numFilas;
         }
     }
-     
-     @Override
+
+    @Override
     public int deleteCliente() throws SQLException {
         String sql = "delete from clientes";
 
@@ -203,5 +192,95 @@ public class ClienteDAO implements ICliente{
         // El borrado se realizó con éxito, devolvemos filas afectadas
         return nfilas;
     }
+
+    public int sacarPinAbonado(String dni) throws SQLException {
+        int numeroPlaza;
+
+        ResultSet res = null;
+
+        String sql = "select pin from clientes where dni =?";
+
+        try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+            prest.setString(1, dni);
+
+            res = prest.executeQuery();
+
+            if (res.first()) {
+
+                numeroPlaza = res.getInt(1);
+                return numeroPlaza;
+            }
+
+            return 0;
+        }
+
+        //ResultSet rs = st.executeQuery("");
+    }
+    
+    public boolean buscarAbonoMatricula(String matricula) throws SQLException {
+
+        ResultSet res = null;
+
+        String sql = "select matricula from clientes where matricula=?";
+
+        try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+            prest.setString(1, matricula);
+
+            res = prest.executeQuery();
+
+            if (res.first()) {
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+    
+    public boolean buscarAbonoPin(int pin) throws SQLException {
+
+        ResultSet res = null;
+
+        String sql = "select pin from clientes where pin=?";
+
+        try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+            prest.setInt(1, pin);
+
+            res = prest.executeQuery();
+
+            if (res.first()) {
  
- }
+                
+                return true;
+            }
+
+            return false;
+        }
+    }
+    
+    public boolean buscarAbonoNumeroPlaza(String numeroPlaza) throws SQLException {
+
+        ResultSet res = null;
+
+        String sql = "select numeroPlaza from clientes where numeroPlaza=?";
+
+        try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+            prest.setString(1, numeroPlaza);
+
+            res = prest.executeQuery();
+
+            if (res.first()) {
+ 
+                
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+}
