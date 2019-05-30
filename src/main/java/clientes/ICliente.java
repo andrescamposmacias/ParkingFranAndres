@@ -17,7 +17,7 @@ public interface ICliente {
     public List<ClientesVO> getAll() throws SQLException;
     
     // Méodo para obtener un registro a partir de la PK
-    boolean buscarCliente(String dni, String matricula) throws SQLException;
+    String buscarCliente(String dni, String matricula) throws SQLException;
     
     // Método para insertar un registro
     int insertCliente (ClientesVO cliente) throws SQLException;
