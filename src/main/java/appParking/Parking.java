@@ -83,6 +83,7 @@ public class Parking {
 
                     break;
                 case 2:
+                    teclado.nextLine();
                     System.out.println("Bienvenido al portal de gestión de su vehiculo del parking, por favor, introduzca su nombre completo: ");
                     String nombreNoAbonado = teclado.nextLine();
                     System.out.println("Bienvenido " + nombreNoAbonado + ", ¿Qué desea hacer?");
@@ -104,12 +105,13 @@ public class Parking {
                                 System.out.println("Retirando vehiculo");
                                 daoPlaza.updatePlazaAbonadoRetirado(numeroPlazaRetirado);
                             } else {
-                                System.out.println("La matricula o el numero de plaza o el pin es incorrecto");
+                                System.out.println("Algún dato introducido es incorrecto");
                             }
 
                             break;
 
                         case 2:
+                            teclado.nextLine();
                             System.out.println("Introduzca su DNI");
                             String dniAbonado = teclado.nextLine();
 
@@ -129,10 +131,10 @@ public class Parking {
                     }
                     break;
                 case 4:
-
+                    System.out.println("Modifica datos del usuario");
                     break;
                 case 5:
-                    System.out.println("Va a darse de baja");
+                    System.out.println("Procediendo a darle de baja");
                     System.out.println("Introduzca su DNI");
                     String dniBaja = teclado.nextLine();
                     if (daoPersona.deleteCliente(dniBaja) != 0) {
@@ -156,14 +158,14 @@ public class Parking {
                             break;
 
                         case 2:
-                            System.out.println("Vamos a restaurar una copia de seguridad");
+                            System.out.println("Restaurando una copia de seguridad");
                             CopiaYRestauracion.restaurar();
                             System.out.println("Se ha restaurado la copia de seguridad correctamente");
                     }
                     break;
             }
         } catch (SQLException sqle) {
-            System.out.println("No se ha podido realizar la operación:");
+            System.out.println("No se ha podido realizar la operación: ");
             System.out.println(sqle.getMessage());
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             System.out.println(e);
