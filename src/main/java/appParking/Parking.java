@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import plazas.PlazaDAO;
 import tickets.TicketsDAO;
+import vehiculos.VehiculoDAO;
 
 /**
  *
@@ -25,6 +26,7 @@ public class Parking {
         ClienteDAO daoPersona = new ClienteDAO();
         TicketsDAO daoTickets = new TicketsDAO();
         PlazaDAO daoPlaza = new PlazaDAO();
+        VehiculoDAO daoVehiculo = new VehiculoDAO();
 
         ClientesVO abonado = new ClientesVO();
 
@@ -41,9 +43,7 @@ public class Parking {
             switch (tipoCliente) {
                 case 1:
                     teclado.nextLine(); //Limpiamos el buffer
-                    System.out.println("Bienvenido al portal de gestión de su abono del parking, por favor, introduzca su nombre completo: ");
-                    String nombreAbonado = teclado.nextLine();
-                    System.out.println("Bienvenido " + nombreAbonado + ", ¿Qué desea hacer?");
+                    System.out.println("Bienvenido al portal de gestión de su abono del parking, ¿qué desea hacer?");
                     System.out.println("1. Retirar vehículo del parking");
                     System.out.println("2. Introducir vehículo en el parking");
                     int eleccionAbonado = teclado.nextInt();
@@ -58,8 +58,8 @@ public class Parking {
                             System.out.println("Introduzca su pin");
                             int pinRetirado = teclado.nextInt();
 
-                            if (daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)) {
-                                System.out.println("Retirando vehiculo");
+                            if (daoPersona.buscarAbonoMatricula(matriculaRetirado) && daoPersona.buscarAbonoNumeroPlaza(numeroPlazaRetirado) && daoPersona.buscarAbonoPin(pinRetirado)) {
+                                System.out.println("El vehiculo ha sido retirado");
                                 daoPlaza.updatePlazaAbonadoRetirado(numeroPlazaRetirado);
                             } else {
                                 System.out.println("Algún dato introducido es incorrecto");
@@ -72,11 +72,10 @@ public class Parking {
 
                             System.out.println("Introduzca su matricula");
                             String matriculaAbonado = teclado.nextLine();
-                            if (daoPersona.buscarCliente(dniAbonado, matriculaAbonado)) {
-                                System.out.println("Ingresando vehiculo");
-
+                            if (daoPlaza.updatePlazaAbonadoIngreso(dniAbonado, matriculaAbonado) != 0) {
+                                System.out.println("Su coche ha ingresado correctamente");
                             } else {
-                                System.out.println("Algún dato introducido es incorrecto");
+                                System.out.println("Ha ocurrido un error");
                             }
 
                     }
@@ -84,9 +83,7 @@ public class Parking {
                     break;
                 case 2:
                     teclado.nextLine();
-                    System.out.println("Bienvenido al portal de gestión de su vehiculo del parking, por favor, introduzca su nombre completo: ");
-                    String nombreNoAbonado = teclado.nextLine();
-                    System.out.println("Bienvenido " + nombreNoAbonado + ", ¿Qué desea hacer?");
+                    System.out.println("Bienvenido cliente no abonado, ¿Qué desea hacer?");
                     System.out.println("1. Retirar vehículo del parking");
                     System.out.println("2. Introducir vehículo en el parking");
                     int eleccionNoAbonado = teclado.nextInt();
@@ -103,7 +100,12 @@ public class Parking {
 
                             if (daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)) {
                                 System.out.println("Retirando vehiculo");
-                                daoPlaza.updatePlazaAbonadoRetirado(numeroPlazaRetirado);
+                                daoPlaza.updatePlazaNoAbonadoSalida(matriculaRetirado);
+                                daoTickets.modificarFechaHoraSalida(matriculaRetirado);//modifica la fecha y la hora de salida buena
+                                double precio = daoTickets.calcularPrecio(matriculaRetirado, numeroPlazaRetirado);//calcula la hora
+                                daoTickets.actualizarPrecio(matriculaRetirado, numeroPlazaRetirado);
+                                System.out.println("el precio total es: " + precio);
+                                System.out.println("Se ha retirado el vehiculo");
                             } else {
                                 System.out.println("Algún dato introducido es incorrecto");
                             }
@@ -111,23 +113,14 @@ public class Parking {
                             break;
 
                         case 2:
-                            teclado.nextLine();
-                            System.out.println("Introduzca su DNI");
-                            String dniAbonado = teclado.nextLine();
+                            daoVehiculo.insertVehiculoPersonaSinAbono();
 
-                            System.out.println("Introduzca su matricula");
-                            String matriculaAbonado = teclado.nextLine();
-                            if (daoPersona.buscarCliente(dniAbonado, matriculaAbonado)) {
-                                System.out.println("Ingresando vehiculo");
-
-                            } else {
-                                System.out.println("El DNI o la matricua es incorrecto");
-                            }
-                            break;
                     }
                 case 3:
                     if (abonado.registro()) {
                         System.out.println("El cliente se ha registrado correctamente");
+                    } else {
+                        System.out.println("No se ha podido registrar el usuario");
                     }
                     break;
                 case 4:
@@ -137,7 +130,7 @@ public class Parking {
                     String nombreActualizar = teclado.nextLine();
                     daoPersona.updateCliente(nombreActualizar, abonado);
                     System.out.println("Datos actualizados");
-                    
+
                     break;
                 case 5:
                     System.out.println("Procediendo a darle de baja");
@@ -154,6 +147,8 @@ public class Parking {
                     System.out.println("¿Qué desea realizar?");
                     System.out.println("1-Copia de seguridad");
                     System.out.println("2-Restaurar una copia de seguridad");
+                    System.out.println("3-Mostrar el estado del parking");
+                    System.out.println("4-Facturacion entre 2 fechas");
                     int seleccionAdmin = teclado.nextInt();
 
                     switch (seleccionAdmin) {
@@ -167,6 +162,14 @@ public class Parking {
                             System.out.println("Restaurando una copia de seguridad");
                             CopiaYRestauracion.restaurar();
                             System.out.println("Se ha restaurado la copia de seguridad correctamente");
+                            break;
+                        case 3:
+                            daoPlaza.estadoPlaza();
+                            break;
+                        case 4:
+                            double precio = daoTickets.calcularFacturacion();
+                            System.out.println("el precio es: " + precio);
+                            break;
                     }
                     break;
             }
