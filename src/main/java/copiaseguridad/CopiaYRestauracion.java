@@ -210,7 +210,7 @@ public class CopiaYRestauracion {
                     //creo un array de String que la condicion sea la barra vertical
                     tokens = linea.split(",");
                     
-                    listaPerso.add(new ClientesVO(tokens[0].trim(),tokens[1].trim(),Integer.parseInt(tokens[2].trim()),tokens[3].trim(),tokens[4].trim(),tokens[5].trim(), tokens[6].trim(),LocalDate.parse(tokens[7].trim()),LocalDate.parse(tokens[8].trim()),tokens[9].trim(),Double.parseDouble(tokens[10].trim())));
+                    listaPerso.add(new ClientesVO(tokens[0].trim(),tokens[1].trim(),Integer.parseInt(tokens[2].trim()),tokens[3].trim(),tokens[4].trim(),tokens[5].trim(), tokens[6].trim(),LocalDate.parse(tokens[7].trim()),LocalDate.parse(tokens[8].trim()),tokens[9].trim(),Double.parseDouble(tokens[10].trim()),Integer.parseInt(tokens[11].trim())));
                         
                     daoCliente.insertCliente(listaPerso);
                     }
@@ -230,7 +230,7 @@ public class CopiaYRestauracion {
                     //creo un array de String que la condicion sea la barra vertical
                     tokens = linea.split(",");
 
-                    listaPlaza.add(new PlazaVO(Integer.parseInt(tokens[0].trim()),tokens[1].trim(),tokens[2].trim(),tokens[3].trim(),Double.parseDouble(tokens[4].trim())));
+                    listaPlaza.add(new PlazaVO(tokens[0].trim(),tokens[1].trim(),tokens[2].trim(),Double.parseDouble(tokens[3].trim())));
                         
                     daoPlaza.insertPlaza(listaPlaza);
                     }
@@ -250,7 +250,7 @@ public class CopiaYRestauracion {
                     //creo un array de String que la condicion sea la barra vertical
                     tokens = linea.split(",");
                   
-                    listaTickets.add(new TicketsVO(Integer.parseInt(tokens[0].trim()),LocalDate.parse(tokens[1].trim()),LocalDate.parse(tokens[2].trim()),LocalTime.parse(tokens[3].trim()),LocalTime.parse(tokens[4].trim()),Double.parseDouble(tokens[5].trim()), Integer.parseInt(tokens[6].trim()),tokens[7].trim(),tokens[8].trim()));
+                    listaTickets.add(new TicketsVO(LocalDate.parse(tokens[0].trim()),LocalDate.parse(tokens[1].trim()),LocalTime.parse(tokens[2].trim()),LocalTime.parse(tokens[3].trim()),Double.parseDouble(tokens[4].trim()), Integer.parseInt(tokens[5].trim()),tokens[6].trim(),tokens[7].trim()));
                         
                     daoTickets.insertTickets(listaTickets);
                     }
