@@ -13,13 +13,13 @@ import java.time.LocalDate;
  */
 public class PlazaVO {
     
+    //Atributos
     private String numeroPlaza;
     private String tipoPlaza;
     private String estado;
     private double precioMinuto;
 
     //constructor parametrizado
-
     public PlazaVO(String numeroPlaza, String tipoPlaza, String estado, double precioMinuto) {
         this.numeroPlaza = numeroPlaza;
         this.tipoPlaza = tipoPlaza;
@@ -27,9 +27,11 @@ public class PlazaVO {
         this.precioMinuto = precioMinuto;
     }
 
+    //Constructor por defecto
     public PlazaVO() {
     }
 
+    //Getter&Setter
     public String getNumeroPlaza() {
         return numeroPlaza;
     }
@@ -62,7 +64,8 @@ public class PlazaVO {
         this.precioMinuto = precioMinuto;
     }
 
-    @Override
+    //toString
+    @Override //Sobrescrito
     public String toString() {
         return numeroPlaza + ", " +tipoPlaza  + ", " +estado  + ", " +precioMinuto;
     }
