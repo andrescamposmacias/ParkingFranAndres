@@ -38,7 +38,8 @@ public class TicketsDAO implements ITicket {
         con = Conexion.getInstance();
     }
 
-    @Override
+    //Método que devuelve una lista de tickets
+    @Override //Sobrescrito
     public List<TicketsVO> getAll() throws SQLException {
         List<TicketsVO> lista = new ArrayList<>();
 
@@ -65,7 +66,8 @@ public class TicketsDAO implements ITicket {
         return lista;
     }
 
-    @Override
+    //Método para buscar un tickets por una matricula
+    @Override //Sobrescrito
     public boolean buscarTicketsMatricula(String matricula) throws SQLException {
 
         ResultSet res = null;
@@ -87,7 +89,8 @@ public class TicketsDAO implements ITicket {
         }
     }
 
-    @Override
+    //Método para buscar un ticket por un pin
+    @Override //Sobrescrito
     public boolean buscarTicketsPin(int pin) throws SQLException {
 
         ResultSet res = null;
@@ -109,7 +112,8 @@ public class TicketsDAO implements ITicket {
         }
     }
 
-    @Override
+    //Método para buscar tickets por un número de plaza
+    @Override //tickets
     public boolean buscarTicketsNumeroPlaza(String numeroPlaza) throws SQLException {
 
         ResultSet res = null;
@@ -131,7 +135,8 @@ public class TicketsDAO implements ITicket {
         }
     }
 
-    @Override
+    //Método para insertar un ticket nuevo
+    @Override //Sobrescrito
     public int insertTickets(TicketsVO ticket) throws SQLException {
 
         int numFilas = 0;
@@ -161,7 +166,8 @@ public class TicketsDAO implements ITicket {
 
     }
 
-    @Override
+    //Método para insettar un ticket en una lista
+    @Override //Sobrescrito
     public int insertTickets(List<TicketsVO> lista) throws SQLException {
         int numFilas = 0;
 
@@ -172,7 +178,8 @@ public class TicketsDAO implements ITicket {
         return numFilas;
     }
 
-    @Override
+    //Método para borrar un ticket de la base de datos
+    @Override //Sobrescrito
     public int deleteTickets(TicketsVO ticket) throws SQLException {
         int numFilas = 0;
 
@@ -189,7 +196,8 @@ public class TicketsDAO implements ITicket {
         return numFilas;
     }
 
-    @Override
+    //Método para actualizar un ticket
+    @Override //Sobrescrito
     public int updateTickets(String matricula, TicketsVO ticket) throws SQLException {
 
         int numFilas = 0;
@@ -217,7 +225,8 @@ public class TicketsDAO implements ITicket {
         }
     }
 
-    @Override
+    //Método para borrar todos los tickets de la base de datos
+    @Override //Sobrescrito
     public int deleteTickets() throws SQLException {
         String sql = "delete from tickets";
 
@@ -234,6 +243,7 @@ public class TicketsDAO implements ITicket {
         return nfilas;
     }
 
+    //Método para genetar aleatoriamente un pin a un cliente no abonado
     public int generacionPinNoAbonado() throws SQLException {
         Random r = new Random();
 
@@ -262,6 +272,7 @@ public class TicketsDAO implements ITicket {
         return pin;
     }
 
+    //Método para buscar un cliente no abonado
     public String buscarClienteNoAbonado(String matricula) throws SQLException {
         String numeroPlaza;
 
@@ -285,6 +296,7 @@ public class TicketsDAO implements ITicket {
         }
     }
 
+    //Método para modificar la hora de salida
     public void modificarFechaHoraSalida(String matricula) throws SQLException {
         LocalDate fecha = LocalDate.now();
         LocalTime hoy = LocalTime.now();
@@ -302,6 +314,7 @@ public class TicketsDAO implements ITicket {
         }
     }
 
+    //Método para calcular el precio final de la estancia del vehículo en el parking
     public double calcularPrecio(String matricula, String numeroPlaza) throws SQLException {
         double precio = 0;
         LocalDateTime salida = null;
@@ -347,6 +360,7 @@ public class TicketsDAO implements ITicket {
 
     }
 
+    //Método para actualizar el precio
     public void actualizarPrecio(String matricula, String numeroPlaza) {
 
         String sql = "update tickets set precio = ? where matricula = ?";
@@ -367,6 +381,7 @@ public class TicketsDAO implements ITicket {
         }
     }
 
+    //Método que calcula la facturación dependiendo de la hora de entrada y salida
     public double calcularFacturacion() throws SQLException {
         double precioTotal = 0;
         LocalDate fechaInicio;
