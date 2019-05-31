@@ -37,6 +37,7 @@ import vehiculos.VehiculoVO;
  */
 public class CopiaYRestauracion {
 
+    //Método para realizar una copia de seguridad
     public static void copia() throws SQLException {
 
         try {
@@ -128,6 +129,7 @@ public class CopiaYRestauracion {
 
     }
 
+    //Método para realizar la restauración desde una copia de seguridad
     public static void restaurar() throws SQLException, FileNotFoundException, UnsupportedEncodingException {
 
         Scanner teclado = new Scanner(System.in);
