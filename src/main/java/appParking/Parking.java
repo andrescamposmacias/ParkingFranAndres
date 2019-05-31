@@ -75,20 +75,21 @@ public class Parking {
                             if (daoPlaza.updatePlazaAbonadoIngreso(dniAbonado, matriculaAbonado) != 0) {
                                 System.out.println("Su coche ha ingresado correctamente");
                             } else {
-                                System.out.println("Ha ocurrido un error");
+                                System.out.println("Lo sentimos, ha ocurrido un error");
                             }
 
                     }
 
                     break;
                 case 2:
-                    teclado.nextLine();
+                    teclado.nextInt();
                     System.out.println("Bienvenido cliente no abonado, ¿Qué desea hacer?");
                     System.out.println("1. Retirar vehículo del parking");
                     System.out.println("2. Introducir vehículo en el parking");
                     int eleccionNoAbonado = teclado.nextInt();
                     switch (eleccionNoAbonado) {
                         case 1:
+                            teclado.nextLine();
                             System.out.println("Introduzca su numero de la plaza");
                             String numeroPlazaRetirado = teclado.nextLine();
 
@@ -104,7 +105,7 @@ public class Parking {
                                 daoTickets.modificarFechaHoraSalida(matriculaRetirado);//modifica la fecha y la hora de salida buena
                                 double precio = daoTickets.calcularPrecio(matriculaRetirado, numeroPlazaRetirado);//calcula la hora
                                 daoTickets.actualizarPrecio(matriculaRetirado, numeroPlazaRetirado);
-                                System.out.println("el precio total es: " + precio);
+                                System.out.println("Su precio total es: " + precio);
                                 System.out.println("Se ha retirado el vehiculo");
                             } else {
                                 System.out.println("Algún dato introducido es incorrecto");
