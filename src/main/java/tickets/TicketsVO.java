@@ -15,6 +15,7 @@ import java.time.LocalTime;
  */
 public class TicketsVO {
 
+    //Atributos
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
     private LocalTime horaEntrada;
@@ -24,6 +25,7 @@ public class TicketsVO {
     private String matricula;
     private String numeroPlaza;
 
+    //Constructor parametrizado
     public TicketsVO( LocalDate fechaEntrada, LocalDate fechaSalida, LocalTime horaEntrada, LocalTime horaSalida, double precio, int pin, String matricula, String numeroPlaza) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
@@ -35,9 +37,11 @@ public class TicketsVO {
         this.numeroPlaza = numeroPlaza;
     }
 
+    //Constructor por defecto
     public TicketsVO() {
     }
 
+    //Getter&Setter
     public LocalDate getFechaEntrada() {
         return fechaEntrada;
     }
@@ -102,7 +106,8 @@ public class TicketsVO {
         this.numeroPlaza = numeroPlaza;
     }
 
-    @Override
+    //toString
+    @Override //Sobrescrito
     public String toString() {
         return fechaEntrada + ", " +fechaSalida  + ", " +horaEntrada  + ", " +horaSalida  + ", " +precio  + ", " +pin  + ", " +matricula  + ", " +numeroPlaza;
     }
