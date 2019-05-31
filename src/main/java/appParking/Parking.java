@@ -29,7 +29,7 @@ public class Parking {
         VehiculoDAO daoVehiculo = new VehiculoDAO();
 
         ClientesVO abonado = new ClientesVO();
-
+        daoPlaza.creacionPlazas();
         Scanner teclado = new Scanner(System.in);
         System.out.println("Bienvenido a HINOBEPA SL, empresa que se dedica a la gestión de parkings de todo el mundo");
         System.out.println("Si usted es ya un cliente abonado, pulse 1\n"
@@ -126,9 +126,11 @@ public class Parking {
                 case 4:
                     teclado.nextLine();
                     System.out.println("Procediendo a la modificación de sus datos");
-                    System.out.println("Por favor, introduzca su nombre");
-                    String nombreActualizar = teclado.nextLine();
-                    daoPersona.updateCliente(nombreActualizar, abonado);
+                    System.out.println("Por favor, introduzca su dni");
+                    String dni = teclado.nextLine();
+                    System.out.println("Por favor, introduzca su matricula");
+                    String matricula = teclado.nextLine();
+                    daoPersona.updateCliente(dni,matricula);
                     System.out.println("Datos actualizados");
 
                     break;
