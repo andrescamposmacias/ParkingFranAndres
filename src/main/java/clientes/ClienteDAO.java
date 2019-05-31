@@ -15,6 +15,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import conexion.Conexion;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Scanner;
 
 /**
  *
@@ -145,35 +148,97 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public int updateCliente(String dni, ClientesVO cliente) throws SQLException {
+    public boolean updateCliente(String dni, String matricula) throws SQLException {
+        
+        
+        Scanner teclado = new Scanner(System.in);
 
-        int numFilas = 0;
-        String sql = "update clientes set dni=?, matricula=?, tarjetaCredito=?, nombre=?, apellido=?, abono=?, email=?, fechaInicio=?, fechaFin=?, numeroPlaza=?, coste=? where dni=?";
+        //atributos cliente
+        String matriculaRegistro;
+        String dniRegistro;
+        int tarjetaCreditoRegistro;
+        String nombreRegistro;
+        String apellidoRegistro;
+        String abonoRegistro;
+        String emailRegistro;
+        LocalDate hoyRegistro = LocalDate.now();
+        LocalDate finalRegistro = null;
+        int costeRegistro = 0;   
 
-        if (buscarCliente(cliente.getDni(), cliente.getMatricula()) == null) {
+        System.out.println("Introduzca su matricula");
+        matriculaRegistro = teclado.nextLine();  
 
-            return numFilas;
+        System.out.println("Introduzca su DNI");
+        dniRegistro = teclado.nextLine();
+
+        System.out.println("Introduzca su Tarjeta de crédito");
+        tarjetaCreditoRegistro = teclado.nextInt();
+
+        teclado.nextLine();//limpiamos el buffer
+
+        System.out.println("Introduzca su nombre");
+        nombreRegistro = teclado.nextLine();
+
+        System.out.println("Introduzca su apellido");
+        apellidoRegistro = teclado.nextLine();
+
+        do {
+            System.out.println("Introduzca el tipo de abono (mensual, trimestral, semestral o anual)");
+            abonoRegistro = teclado.nextLine();
+        } while (!abonoRegistro.equalsIgnoreCase("mensual") && !abonoRegistro.equalsIgnoreCase("trimestral") && !abonoRegistro.equalsIgnoreCase("semestral") && !abonoRegistro.equalsIgnoreCase("anual"));
+
+        System.out.println("Introduzca su email");
+        emailRegistro = teclado.nextLine();
+
+        if (abonoRegistro.equalsIgnoreCase("mensual")) {
+
+            finalRegistro = hoyRegistro.plus(1, ChronoUnit.MONTHS);
+            costeRegistro = 25;
+
+        } else if (abonoRegistro.equalsIgnoreCase("trimestral")) {
+
+            finalRegistro = hoyRegistro.plus(3, ChronoUnit.MONTHS);
+            costeRegistro = 70;
+
+        } else if (abonoRegistro.equalsIgnoreCase("semestral")) {
+
+            finalRegistro = hoyRegistro.plus(6, ChronoUnit.MONTHS);
+            costeRegistro = 130;
+
+        } else if (abonoRegistro.equalsIgnoreCase("anual")) {
+
+            finalRegistro = hoyRegistro.plus(1, ChronoUnit.YEARS);
+            costeRegistro = 200;
+
+        }
+        
+        String sql = "update clientes set dni=?, matricula=?, tarjetaCredito=?, nombre=?, apellido=?, abono=?, email=?, fechaInicio=?, fechaFin=?, coste=? where dni=?";
+
+        if (buscarCliente(dniRegistro, matriculaRegistro) == null) {
+
+            System.out.println("El cliente que intenta modificar no existe");
         } else {
 
             try (PreparedStatement prest = con.prepareStatement(sql)) {
 
-                prest.setString(1, cliente.getDni());
-                prest.setString(2, cliente.getMatricula());
-                prest.setInt(3, cliente.getTarjetaCredito());
-                prest.setString(4, cliente.getNombre());
-                prest.setString(5, cliente.getApellido());
-                prest.setString(6, cliente.getTipoAbono());
-                prest.setString(7, cliente.getEmail());
-                prest.setDate(8, Date.valueOf(cliente.getFechaInicio()));
-                prest.setDate(9, Date.valueOf(cliente.getFechaFin()));
-                prest.setString(10, cliente.getNumeroPlaza());
-                prest.setDouble(11, cliente.getCoste());
-                prest.setString(12, dni);
+                prest.setString(1, dniRegistro);
+                prest.setString(2, matriculaRegistro);
+                prest.setInt(3, tarjetaCreditoRegistro);
+                prest.setString(4, nombreRegistro);
+                prest.setString(5, apellidoRegistro);
+                prest.setString(6, abonoRegistro);
+                prest.setString(7, emailRegistro);
+                prest.setDate(8, Date.valueOf(hoyRegistro));
+                prest.setDate(9,Date.valueOf(finalRegistro));
+                prest.setDouble(10, costeRegistro);
+                prest.setString(11, dni);
 
-                numFilas = prest.executeUpdate();
+                prest.executeUpdate();
+                return true;
             }
-            return numFilas;
+            
         }
+        return false;
     }
 
     @Override
