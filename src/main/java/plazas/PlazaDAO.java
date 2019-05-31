@@ -21,6 +21,8 @@ import tickets.TicketsDAO;
  *
  * @author andres
  */
+
+//Método para conectar la clase con la base de datos
 public class PlazaDAO implements IPlaza {
 
     private Connection con = null;
@@ -29,7 +31,8 @@ public class PlazaDAO implements IPlaza {
         con = Conexion.getInstance();
     }
 
-    @Override
+    //Método que devuelve todos los clientes
+    @Override //Sobrescrito
     public List<PlazaVO> getAll() throws SQLException {
         List<PlazaVO> lista = new ArrayList<>();
 
@@ -52,7 +55,8 @@ public class PlazaDAO implements IPlaza {
         return lista;
     }
 
-    @Override
+    //Método para buscar una plaza en la base de datos
+    @Override //Sobrescrito
     public PlazaVO buscarPlaza(String numPlaza) throws SQLException {
 
         ResultSet res = null;
@@ -83,7 +87,8 @@ public class PlazaDAO implements IPlaza {
         }
     }
 
-    @Override
+    //Método para insertar una plaza en la base de datos
+    @Override //Sobrescrito
     public int insertPlaza(PlazaVO plaza) throws SQLException {
 
         int numFilas = 0;
@@ -109,7 +114,8 @@ public class PlazaDAO implements IPlaza {
 
     }
 
-    @Override
+    //Método para insertar una plaza en la lista de plazas
+    @Override //Sobrescrito
     public int insertPlaza(List<PlazaVO> lista) throws SQLException {
         int numFilas = 0;
 
@@ -120,7 +126,8 @@ public class PlazaDAO implements IPlaza {
         return numFilas;
     }
 
-    @Override
+    //Método para borrar una plaza
+    @Override //Sobrescrito
     public int deletePlaza(PlazaVO plaza) throws SQLException {
         int numFilas = 0;
 
@@ -137,7 +144,8 @@ public class PlazaDAO implements IPlaza {
         return numFilas;
     }
 
-    @Override
+    //Método para actualizar una plaza
+    @Override //Sobrescrito
     public int updatePlaza(String numPlaza, PlazaVO plaza) throws SQLException {
 
         int numFilas = 0;
@@ -164,7 +172,8 @@ public class PlazaDAO implements IPlaza {
         }
     }
 
-    @Override
+    //Método para actualizar una plaza de abonado
+    @Override //Sobrescrito
     public int updatePlazaAbonadoRetirado(String numPlaza) throws SQLException {
 
         int numFilas = 0;
@@ -183,7 +192,8 @@ public class PlazaDAO implements IPlaza {
 
     }
 
-    @Override
+    //Método para borrar todas las plazas de la base de datos
+    @Override //Sobrescrito
     public int deletePlaza() throws SQLException {
         String sql = "delete from plaza";
 
@@ -200,6 +210,7 @@ public class PlazaDAO implements IPlaza {
         return nfilas;
     }
 
+    //Método para comprobar si está ocupada una plaza de vehiculos tipo turismos
     public String plazaTurismoOcupado() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -217,6 +228,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método para comprobar si está libre una plaza de vehiculos tipo turismos
     public String plazaTurismoLibre() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -234,6 +246,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método para comprobar si está ocupada una plaza de vehiculos tipo motocicletas
     public String plazaMotocicletaOcupado() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -251,6 +264,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método para comprobar si está libre una plaza de vehiculos tipo turismos
     public String plazaMotocicletaLibre() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -268,6 +282,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método para comprobar si está ocupada una plaza de vehiculos tipo caravana
     public String plazaCaravanaOcupado() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -285,6 +300,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método para comprobar si está libre una plaza de vehiculos tipo turismos
     public String plazaCaravanaLibre() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -302,6 +318,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método para crear las 45 plazas
     public void creacionPlazas() {
         String n = "0";
         try {
@@ -379,6 +396,7 @@ public class PlazaDAO implements IPlaza {
 
     }
 
+    //Método que nos devuelve el número de plaza de tipo turismo
     public String sacarNumeroPlazaTurismo() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -395,6 +413,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método que nos devuelve el número de plaza de tipo motocicleta
     public String sacarNumeroPlazaMotocicleta() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -411,6 +430,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método que nos devuelve el número de plaza de tipo caravana
     public String sacarNumeroPlazaCaravana() throws SQLException {
         String n = "0";
         Statement st = con.createStatement();
@@ -427,6 +447,7 @@ public class PlazaDAO implements IPlaza {
         return n;
     }
 
+    //Método para actualizar la plaza de un abonado
     public int updatePlazaAbonadoIngreso(String dni, String matricula) throws SQLException {
         ClienteDAO comprobar = new ClienteDAO();
         int numFilas = 0;
@@ -438,7 +459,7 @@ public class PlazaDAO implements IPlaza {
             return 0;
         }
         if (comprobacionEstadoPlaza(numPlaza).equalsIgnoreCase("abono ocupada")) {
-            System.out.println("Ese coche ya esta en el parking");
+            System.out.println("Este vehículo ya se encuentra en el parking");
         } else {
             int pin = comprobar.sacarPinAbonado(dni);
 
@@ -461,6 +482,7 @@ public class PlazaDAO implements IPlaza {
 
     }
 
+    //Método para comprobar el estado de la plaza
     public String comprobacionEstadoPlaza(String numeroPlaza) throws SQLException {
 
         ResultSet res = null;
@@ -485,6 +507,7 @@ public class PlazaDAO implements IPlaza {
 
     }
 
+    //Método para actualizar la plaza de un no abonado
     public boolean updatePlazaNoAbonadoIngreso(String matricula) throws SQLException {
 
         TicketsDAO comprobar = new TicketsDAO();
@@ -516,6 +539,7 @@ public class PlazaDAO implements IPlaza {
 
     }
 
+    //Método para actualizar la hora de salida de un no abonado
     public boolean updatePlazaNoAbonadoSalida(String matricula) throws SQLException {
 
         TicketsDAO comprobar = new TicketsDAO();
@@ -547,6 +571,7 @@ public class PlazaDAO implements IPlaza {
 
     }
 
+    //Método para consultar el estado de una determinada plaza
     public void estadoPlaza() throws SQLException {
         try (Statement st = con.createStatement()) {
 
