@@ -31,7 +31,8 @@ public class ClienteDAO implements ICliente {
         con = Conexion.getInstance();
     }
 
-    @Override
+    //Método que devuelve todos los clientes
+    @Override ///Sobrescrito
     public List<ClientesVO> getAll() throws SQLException {
         List<ClientesVO> lista = new ArrayList<>();
 
@@ -61,7 +62,8 @@ public class ClienteDAO implements ICliente {
         return lista;
     }
 
-    @Override
+    //Método que busca un cliente a través de su dni y su matricula
+    @Override //Sobrescrito
     public String buscarCliente(String dni, String matricula) throws SQLException {
         String numeroPlaza;
 
@@ -86,7 +88,8 @@ public class ClienteDAO implements ICliente {
         }
     }
 
-    @Override
+    //Método para insertar un cliente nuevo
+    @Override //Sobrescrito
     public int insertCliente(ClientesVO cliente) throws SQLException {
 
         int numFilas = 0;
@@ -119,7 +122,8 @@ public class ClienteDAO implements ICliente {
 
     }
 
-    @Override
+    //Método para agregar a la lista de clientes uno nuevo
+    @Override //Sobrescrito
     public int insertCliente(List<ClientesVO> lista) throws SQLException {
         int numFilas = 0;
 
@@ -130,7 +134,8 @@ public class ClienteDAO implements ICliente {
         return numFilas;
     }
 
-    @Override
+    //Método para borrar a un cliente pasándo un dni
+    @Override //Sobrescrito
     public int deleteCliente(String dni) throws SQLException {
         int numFilas = 0;
 
@@ -147,7 +152,8 @@ public class ClienteDAO implements ICliente {
         return numFilas;
     }
 
-    @Override
+    //Método para actualizar los datos de un cliente
+    @Override //Sobrescrito
     public boolean updateCliente(String dni, String matricula) throws SQLException {
         
         
@@ -182,6 +188,7 @@ public class ClienteDAO implements ICliente {
         System.out.println("Introduzca su apellido");
         apellidoRegistro = teclado.nextLine();
 
+        //Elige el tipo de abono
         do {
             System.out.println("Introduzca el tipo de abono (mensual, trimestral, semestral o anual)");
             abonoRegistro = teclado.nextLine();
@@ -241,7 +248,8 @@ public class ClienteDAO implements ICliente {
         return false;
     }
 
-    @Override
+    //Método para borrar todos los clientes
+    @Override //Sobrescrito
     public int deleteCliente() throws SQLException {
         String sql = "delete from clientes";
 
@@ -258,6 +266,7 @@ public class ClienteDAO implements ICliente {
         return nfilas;
     }
 
+    //Método que devuelve un pin asociado a un cliente
     public int sacarPinAbonado(String dni) throws SQLException {
         int numeroPlaza;
 
@@ -283,6 +292,7 @@ public class ClienteDAO implements ICliente {
         //ResultSet rs = st.executeQuery("");
     }
     
+    //Método para comprobar que existe un vehiculo con la matricula escogida
     public boolean buscarAbonoMatricula(String matricula) throws SQLException {
 
         ResultSet res = null;
@@ -304,6 +314,7 @@ public class ClienteDAO implements ICliente {
         }
     }
     
+    //Método para comprobar que existe un cliente con el pin introducido
     public boolean buscarAbonoPin(int pin) throws SQLException {
 
         ResultSet res = null;
@@ -326,6 +337,7 @@ public class ClienteDAO implements ICliente {
         }
     }
     
+    //Método para comprobar que existe un abono con el numero de plaza introducido
     public boolean buscarAbonoNumeroPlaza(String numeroPlaza) throws SQLException {
 
         ResultSet res = null;
