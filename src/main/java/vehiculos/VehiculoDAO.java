@@ -34,7 +34,8 @@ public class VehiculoDAO implements IVehiculo {
         con = Conexion.getInstance();
     }
 
-    @Override
+    //Método que devuelve todos los vehículos
+    @Override //Sobrescrito
     public List<VehiculoVO> getAll() throws SQLException {
         List<VehiculoVO> lista = new ArrayList<>();
 
@@ -58,7 +59,8 @@ public class VehiculoDAO implements IVehiculo {
         return lista;
     }
 
-    @Override
+    //Método para encontrar un vehículo por la matrícula
+    @Override //Sobrescrito
     public VehiculoVO findByMatricula(String matricula) throws SQLException {
 
         ResultSet res = null;
@@ -86,7 +88,8 @@ public class VehiculoDAO implements IVehiculo {
         }
     }
 
-    @Override
+    //Método para insertar un vehículo
+    @Override //Sobrescrito
     public int insertVehiculo(VehiculoVO vehiculo) throws SQLException {
 
         int numFilas = 0;
@@ -112,7 +115,8 @@ public class VehiculoDAO implements IVehiculo {
 
     }
 
-    @Override
+    //Método para insertar un vehículo en la lista de vehículos
+    @Override //Sobrescrito
     public int insertVehiculo(List<VehiculoVO> lista) throws SQLException {
         int numFilas = 0;
 
@@ -123,7 +127,8 @@ public class VehiculoDAO implements IVehiculo {
         return numFilas;
     }
 
-    @Override
+    //Método para borrar los vehículos de la base de datos
+    @Override //Sobrescrito
     public int deleteVehiculo() throws SQLException {
 
         String sql = "delete from vehiculo";
@@ -142,7 +147,8 @@ public class VehiculoDAO implements IVehiculo {
 
     }
 
-    @Override
+    //Método para borrar un vehículo
+    @Override //Sobrescrito
     public int deleteVehiculo(VehiculoVO vehiculo) throws SQLException {
         int numFilas = 0;
 
@@ -159,7 +165,8 @@ public class VehiculoDAO implements IVehiculo {
         return numFilas;
     }
 
-    @Override
+    //Método para actualizar un vehículo
+    @Override //Sobrescrito
     public int updateVehiculo(String matricula, VehiculoVO nuevosDatos) throws SQLException {
 
         int numFilas = 0;
@@ -183,7 +190,8 @@ public class VehiculoDAO implements IVehiculo {
         }
     }
 
-    @Override
+    //Método para borrar todos los vehículos de la base de datos 
+    @Override //Sobrescrito
     public int deleteVehiculos() throws SQLException {
         String sql = "delete from vehiculo";
 
@@ -200,6 +208,7 @@ public class VehiculoDAO implements IVehiculo {
         return nfilas;
     }
 
+    //Método para insettar un vehículo de un cliente sin abono
     public boolean insertVehiculoPersonaSinAbono() throws SQLException {
 
         Scanner teclado = new Scanner(System.in);
@@ -280,10 +289,10 @@ public class VehiculoDAO implements IVehiculo {
         
         LocalDateTime fechaYHora = LocalDateTime.of(hoyRegistro, hoyHora);
         
-        System.out.println("El ticket generado es:");
+        System.out.println("-------TICKET-------");
         System.out.println("La matricula del coche es: " + matriculaRegistro);
         System.out.println("La fecha y hora de ingreso es: " + fechaYHora);
-        System.out.println("El numero de su plaza es: " + numeroPlazaRegistro);
+        System.out.println("El número de su plaza es: " + numeroPlazaRegistro);
         System.out.println("Su pin para retirar el coche es: " + pinNoAbonado);
         
         tickets.insertTickets(new TicketsVO(hoyRegistro,finalRegistro,hoyHora,finalHora,0.0,pinNoAbonado,matriculaRegistro,numeroPlazaRegistro));
