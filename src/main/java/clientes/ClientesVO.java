@@ -24,6 +24,7 @@ import vehiculos.VehiculoVO;
  */
 public class ClientesVO {
 
+    //Atributos
     private String dni;
     private String matricula;
     private int tarjetaCredito;
@@ -37,6 +38,7 @@ public class ClientesVO {
     private double coste;
     private int pin;
 
+    //Constructor parametrizado
     public ClientesVO(String dni, String matricula, int tarjetaCredito, String nombre, String apellido, String tipoAbono, String email, LocalDate fechaInicio, LocalDate fechaFin, String numeroPlaza, double coste, int pin) {
         this.dni = dni;
         this.matricula = matricula;
@@ -52,9 +54,11 @@ public class ClientesVO {
         this.pin = pin;
     }
 
+    //Constructor por defecto
     public ClientesVO() {
     }
 
+    //Getter&Setter
     public String getDni() {
         return dni;
     }
@@ -151,11 +155,13 @@ public class ClientesVO {
         this.pin = pin;
     }
 
+    //toString
     @Override
     public String toString() {
         return dni + "," + matricula + "," + tarjetaCredito + "," + nombre + "," + apellido + "," + tipoAbono + "," + email + "," + fechaInicio + "," + fechaFin + "," + numeroPlaza + "," + coste + "," + pin;
     }
     
+    //Método que genera un número pin aleatorio
     private int generacionPin(String dni) throws SQLException {
         Random r = new Random();
         
@@ -186,6 +192,7 @@ public class ClientesVO {
         return pin;
     }
 
+    //Método para registrar a un vehículo en el parking
     public boolean registro() throws SQLException {
         Scanner teclado = new Scanner(System.in);
 
