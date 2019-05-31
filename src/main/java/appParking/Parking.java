@@ -102,8 +102,8 @@ public class Parking {
                             if (daoTickets.buscarTicketsMatricula(matriculaRetirado) && daoTickets.buscarTicketsNumeroPlaza(numeroPlazaRetirado) && daoTickets.buscarTicketsPin(pinRetirado)) {
                                 System.out.println("Retirando vehiculo");
                                 daoPlaza.updatePlazaNoAbonadoSalida(matriculaRetirado);
-                                daoTickets.modificarFechaHoraSalida(matriculaRetirado);//modifica la fecha y la hora de salida buena
-                                double precio = daoTickets.calcularPrecio(matriculaRetirado, numeroPlazaRetirado);//calcula la hora
+                                daoTickets.modificarFechaHoraSalida(matriculaRetirado);//Modifica la fecha y la hora de salida buena
+                                double precio = daoTickets.calcularPrecio(matriculaRetirado, numeroPlazaRetirado);//Calcula la hora
                                 daoTickets.actualizarPrecio(matriculaRetirado, numeroPlazaRetirado);
                                 System.out.println("Su precio total es: " + precio);
                                 System.out.println("Se ha retirado el vehiculo");
