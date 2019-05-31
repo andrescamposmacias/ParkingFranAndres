@@ -303,59 +303,78 @@ public class PlazaDAO implements IPlaza {
     }
 
     public void creacionPlazas() {
-
+        String n = "0";
         try {
             Statement st = con.createStatement();
-            st.executeUpdate("insert into plaza values (1,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (2,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (3,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (4,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (5,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (6,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (7,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (8,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (9,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (10,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (11,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (12,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (13,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (14,'Turismo','libre','0.12')");
-            st.executeUpdate("insert into plaza values (15,'Turismo','libre','0.12')");
 
-            st.executeUpdate("insert into plaza values (16,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (17,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (18,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (19,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (20,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (21,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (22,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (23,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (24,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (25,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (26,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (27,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (28,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (29,'Motocicleta','libre','0.08')");
-            st.executeUpdate("insert into plaza values (30,'Motocicleta','libre','0.08')");
-
-            st.executeUpdate("insert into plaza values (31,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (32,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (33,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (34,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (35,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (36,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (37,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (38,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (39,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (40,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (41,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (42,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (43,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (44,'Caravana','libre','0.45')");
-            st.executeUpdate("insert into plaza values (45,'Caravana','libre','0.45')");
-
+            // almaceno resultado de consulta en ResultSet
+            ResultSet rs = st.executeQuery("SELECT COUNT(numeroPlaza) FROM plaza");
+            // chequeo que el result set no sea vacío, moviendo el cursor a la 
+            // primer fila. (El cursor inicia antes de la primer fila)
+            if (rs.next()) {
+                //Si hay resultados obtengo el valor. 
+                n = rs.getString(1);
+            }
         } catch (SQLException e) {
             System.out.println(e);
+        }
+
+        if (n.equalsIgnoreCase("45")) {
+
+        } else {
+            try {
+                Statement st = con.createStatement();
+                st.executeUpdate("insert into plaza values (1,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (2,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (3,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (4,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (5,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (6,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (7,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (8,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (9,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (10,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (11,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (12,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (13,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (14,'Turismo','libre','0.12')");
+                st.executeUpdate("insert into plaza values (15,'Turismo','libre','0.12')");
+
+                st.executeUpdate("insert into plaza values (16,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (17,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (18,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (19,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (20,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (21,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (22,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (23,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (24,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (25,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (26,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (27,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (28,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (29,'Motocicleta','libre','0.08')");
+                st.executeUpdate("insert into plaza values (30,'Motocicleta','libre','0.08')");
+
+                st.executeUpdate("insert into plaza values (31,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (32,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (33,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (34,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (35,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (36,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (37,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (38,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (39,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (40,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (41,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (42,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (43,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (44,'Caravana','libre','0.45')");
+                st.executeUpdate("insert into plaza values (45,'Caravana','libre','0.45')");
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
 
     }
