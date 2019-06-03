@@ -171,7 +171,7 @@ public class Parking {
                             break;
                         case 4:
                             double precio = daoTickets.calcularFacturacion();
-                            System.out.println("el precio es: " + precio);
+                            System.out.println("Su precio es: " + precio);
                             break;
                     }
                     break;
