@@ -172,7 +172,7 @@ public class ClientesVO {
         File archivoBackup = new File("pinesAbonados");
         archivoBackup.mkdir();
         
-        try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackup + "\\" + dni + ".txt"))) {
+        try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackup + "/" + dni + ".txt"))) {
 
 
                     // Usamos metodo write() para escribir en el buffer
