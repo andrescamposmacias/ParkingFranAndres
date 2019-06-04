@@ -187,7 +187,7 @@ public class Parking {
                             case 5:
                                 System.out.println("Introduza el número de un mes: ");
                                 int numeroMes = teclado.nextInt();
-                                daoPersona.comprobarCaducidad();
+                                daoPersona.comprobarCaducidad(numeroMes);
                                 break;
                         }
                         break;
