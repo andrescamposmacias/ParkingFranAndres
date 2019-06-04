@@ -168,8 +168,8 @@ public class CopiaYRestauracion {
 
         ArrayList<VehiculoVO> listaVehi = new ArrayList<>();
         ArrayList<ClientesVO> listaPerso = new ArrayList<>();
-        List<TicketsVO> listaTickets = daoTickets.getAll();
-        List<PlazaVO> listaPlaza = daoPlaza.getAll();
+        ArrayList<TicketsVO> listaTickets = new ArrayList<>();
+        ArrayList<PlazaVO> listaPlaza = new ArrayList<>();
 
         //un array de String
         String[] tokens;
@@ -181,7 +181,7 @@ public class CopiaYRestauracion {
         daoTickets.deleteTickets();
         daoPlaza.deletePlaza();
         
-        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Vehiculos.txt"), "ISO-8859-1"))) {
+        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Vehiculos.txt")))) {
             
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
@@ -197,11 +197,11 @@ public class CopiaYRestauracion {
                     daoVehiculo.insertVehiculo(listaVehi);
                     }
                   
-            }catch(FileNotFoundException | UnsupportedEncodingException e){
+            }catch(FileNotFoundException e){
                 System.out.println(e);
             }
 
-        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Clientes.txt"), "ISO-8859-1"))) {
+        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Clientes.txt")))) {
             
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
@@ -217,11 +217,11 @@ public class CopiaYRestauracion {
                     daoCliente.insertCliente(listaPerso);
                     }
                   
-            }catch(FileNotFoundException | UnsupportedEncodingException e){
+            }catch(FileNotFoundException e){
                 System.out.println(e);
             }
         
-        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Plaza.txt"), "ISO-8859-1"))) {
+        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Plaza.txt")))) {
             
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
@@ -237,11 +237,11 @@ public class CopiaYRestauracion {
                     daoPlaza.insertPlaza(listaPlaza);
                     }
                   
-            }catch(FileNotFoundException | UnsupportedEncodingException e){
+            }catch(FileNotFoundException e){
                 System.out.println(e);
             }
         
-         try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Tickets.txt"), "ISO-8859-1"))) {
+         try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Tickets.txt")))) {
             
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
@@ -257,7 +257,7 @@ public class CopiaYRestauracion {
                     daoTickets.insertTickets(listaTickets);
                     }
                   
-            }catch(FileNotFoundException | UnsupportedEncodingException e){
+            }catch(FileNotFoundException e){
                 System.out.println(e);
             }
          
