@@ -391,4 +391,30 @@ public class ClienteDAO implements ICliente {
         }
     }
 
+    //Método que informa de la caducidad del abono en los próximos diez días
+    public void comprobarCaducidad() {
+
+        ResultSet res = null;
+
+        String dni;
+        LocalDate ini = LocalDate.now();
+        LocalDate fin = ini.plusDays(10);
+        String sql = "select dni from clientes where fechaInicio >= ? and fechaFin<= ?";
+
+        try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+            prest.setDate(1, Date.valueOf(ini));
+            prest.setDate(2, Date.valueOf(fin));
+
+            res = prest.executeQuery();
+
+            while (res.first()) {
+                dni = res.getString(1);
+                System.out.println(dni);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
