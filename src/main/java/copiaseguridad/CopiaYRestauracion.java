@@ -62,7 +62,7 @@ public class CopiaYRestauracion {
             List<TicketsVO> listaTickets = daoTickets.getAll();
             List<PlazaVO> listaPlaza = daoPlaza.getAll();
 
-            try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackupHoy + "\\Vehiculos.txt"))) {
+            try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackupHoy + "/Vehiculos.txt"))) {
 
                 for (VehiculoVO i : listaVehi) {
                     // Usamos metodo write() para escribir en el buffer
@@ -78,7 +78,7 @@ public class CopiaYRestauracion {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-            try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackupHoy + "\\Clientes.txt"))) {
+            try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackupHoy + "/Clientes.txt"))) {
                 for (ClientesVO i : listaPerso) {
                     // Usamos metodo write() para escribir en el buffer
                     flujo.write(i + ",");
@@ -93,7 +93,7 @@ public class CopiaYRestauracion {
                 System.out.println(e.getMessage());
             }
 
-            try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackupHoy + "\\Tickets.txt"))) {
+            try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackupHoy + "/Tickets.txt"))) {
 
                 for (TicketsVO i : listaTickets) {
                     // Usamos metodo write() para escribir en el buffer
@@ -109,7 +109,7 @@ public class CopiaYRestauracion {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-            try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackupHoy + "\\Plaza.txt"))) {
+            try (BufferedWriter flujo = new BufferedWriter(new FileWriter(archivoBackupHoy + "/Plaza.txt"))) {
                 for (PlazaVO i : listaPlaza) {
                     // Usamos metodo write() para escribir en el buffer
                     flujo.write(i + ",");
@@ -181,7 +181,7 @@ public class CopiaYRestauracion {
         daoTickets.deleteTickets();
         daoPlaza.deletePlaza();
         
-        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Vehiculos.txt"), "ISO-8859-1"))) {
+        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Vehiculos.txt"), "ISO-8859-1"))) {
             
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
@@ -201,7 +201,7 @@ public class CopiaYRestauracion {
                 System.out.println(e);
             }
 
-        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Clientes.txt"), "ISO-8859-1"))) {
+        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Clientes.txt"), "ISO-8859-1"))) {
             
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
@@ -221,7 +221,7 @@ public class CopiaYRestauracion {
                 System.out.println(e);
             }
         
-        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Plaza.txt"), "ISO-8859-1"))) {
+        try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Plaza.txt"), "ISO-8859-1"))) {
             
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
@@ -241,7 +241,7 @@ public class CopiaYRestauracion {
                 System.out.println(e);
             }
         
-         try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "\\Tickets.txt"), "ISO-8859-1"))) {
+         try (Scanner datosFichero = new Scanner(new InputStreamReader(new FileInputStream(seleccionArchivo + "/Tickets.txt"), "ISO-8859-1"))) {
             
             //repite el bucle hasta que no encuentre alguna linea
             while (datosFichero.hasNextLine()) {
