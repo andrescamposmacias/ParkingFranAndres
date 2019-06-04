@@ -428,14 +428,20 @@ public class TicketsDAO implements ITicket {
         int minFinal = teclado.nextInt();
 
         horafinal = LocalTime.of(horaFinal, minFinal);
-        
+       
+        if (horaInicio.isAfter(horafinal)){
+            horaInicio = LocalTime.of(horaFinal, minFinal);
+            horafinal = LocalTime.of(hora, min);
+        }
+       
         System.out.println("fecha ini " + fechaInicio);
         System.out.println("fecha fin " + fechaFinal);
         System.out.println("hora ini " + horaInicio);
         System.out.println("hora fin " + horaFinal);
-        
+       
+        //la hora de entrada seran las 00 y la hora de salida sera las 23 para comprobar la facturacion
         String sql = "SELECT precio FROM tickets where precio!=0 and fechaEntrada>=? and fechaSalida<=? and horaEntrada>=? and horaSalida<=?";
-        
+       
         ResultSet prec = null;
 
         try (PreparedStatement prest = con.prepareStatement(sql)) {
@@ -444,7 +450,7 @@ public class TicketsDAO implements ITicket {
             prest.setDate(2, Date.valueOf(fechaFinal));
             prest.setTime(3, Time.valueOf(horaInicio));
             prest.setTime(4, Time.valueOf(horafinal));
-            
+           
             prec = prest.executeQuery();
 
             while (prec.next()) {
