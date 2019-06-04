@@ -18,6 +18,7 @@ import conexion.Conexion;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
+import plazas.PlazaDAO;
 
 /**
  *
@@ -137,26 +138,58 @@ public class ClienteDAO implements ICliente {
     //Método para borrar a un cliente pasándo un dni
     @Override //Sobrescrito
     public int deleteCliente(String dni) throws SQLException {
+        PlazaDAO plaza = new PlazaDAO();
         int numFilas = 0;
+        int numero = (int) (Math.random() * 100000);
+        String dniNoFuncional = "No valido " + numero;
+        String camposNoValidos = "---------";
+        int campoNoValido = 0;
+        String numeroPlaza = "";
 
-        String sql = "delete from clientes where dni = ?";
+        ResultSet res = null;
+
+        String sql2 = "select numeroPlaza from clientes where dni=?";
+
+        try (PreparedStatement prest2 = con.prepareStatement(sql2)) {
+
+            prest2.setString(1, dni);
+
+            res = prest2.executeQuery();
+
+            if (res.first()) {
+
+                numeroPlaza = res.getString(1);
+
+            }
+
+        }
+        // libero recursos
+        plaza.updatePlazaAbonadoBaja(numeroPlaza);
+
+        String sql = "update clientes set dni=?, tarjetaCredito=?, nombre=?, apellido=?, email=?, numeroPlaza=? where dni=?";
 
         // Sentencia parametrizada
         try (PreparedStatement prest = con.prepareStatement(sql)) {
 
             // Establecemos los parámetros de la sentencia
-            prest.setString(1, dni);
+            prest.setString(1, dniNoFuncional);
+            prest.setInt(2, campoNoValido);
+            prest.setString(3, camposNoValidos);
+            prest.setString(4, camposNoValidos);
+            prest.setString(5, camposNoValidos);
+            prest.setString(6, camposNoValidos);
+            prest.setString(7, dni);
             // Ejecutamos la sentencia
             numFilas = prest.executeUpdate();
         }
+
         return numFilas;
     }
 
     //Método para actualizar los datos de un cliente
     @Override //Sobrescrito
     public boolean updateCliente(String dni, String matricula) throws SQLException {
-        
-        
+
         Scanner teclado = new Scanner(System.in);
 
         //atributos cliente
@@ -169,10 +202,10 @@ public class ClienteDAO implements ICliente {
         String emailRegistro;
         LocalDate hoyRegistro = LocalDate.now();
         LocalDate finalRegistro = null;
-        int costeRegistro = 0;   
+        int costeRegistro = 0;
 
         System.out.println("Introduzca su matricula");
-        matriculaRegistro = teclado.nextLine();  
+        matriculaRegistro = teclado.nextLine();
 
         System.out.println("Introduzca su DNI");
         dniRegistro = teclado.nextLine();
@@ -218,7 +251,7 @@ public class ClienteDAO implements ICliente {
             costeRegistro = 200;
 
         }
-        
+
         String sql = "update clientes set dni=?, matricula=?, tarjetaCredito=?, nombre=?, apellido=?, abono=?, email=?, fechaInicio=?, fechaFin=?, coste=? where dni=?";
 
         if (buscarCliente(dniRegistro, matriculaRegistro) == null) {
@@ -236,14 +269,14 @@ public class ClienteDAO implements ICliente {
                 prest.setString(6, abonoRegistro);
                 prest.setString(7, emailRegistro);
                 prest.setDate(8, Date.valueOf(hoyRegistro));
-                prest.setDate(9,Date.valueOf(finalRegistro));
+                prest.setDate(9, Date.valueOf(finalRegistro));
                 prest.setDouble(10, costeRegistro);
                 prest.setString(11, dni);
 
                 prest.executeUpdate();
                 return true;
             }
-            
+
         }
         return false;
     }
@@ -291,7 +324,7 @@ public class ClienteDAO implements ICliente {
 
         //ResultSet rs = st.executeQuery("");
     }
-    
+
     //Método para comprobar que existe un vehiculo con la matricula escogida
     public boolean buscarAbonoMatricula(String matricula) throws SQLException {
 
@@ -313,7 +346,7 @@ public class ClienteDAO implements ICliente {
             return false;
         }
     }
-    
+
     //Método para comprobar que existe un cliente con el pin introducido
     public boolean buscarAbonoPin(int pin) throws SQLException {
 
@@ -328,15 +361,14 @@ public class ClienteDAO implements ICliente {
             res = prest.executeQuery();
 
             if (res.first()) {
- 
-                
+
                 return true;
             }
 
             return false;
         }
     }
-    
+
     //Método para comprobar que existe un abono con el numero de plaza introducido
     public boolean buscarAbonoNumeroPlaza(String numeroPlaza) throws SQLException {
 
@@ -351,8 +383,7 @@ public class ClienteDAO implements ICliente {
             res = prest.executeQuery();
 
             if (res.first()) {
- 
-                
+
                 return true;
             }
 
