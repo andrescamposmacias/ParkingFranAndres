@@ -191,6 +191,24 @@ public class PlazaDAO implements IPlaza {
         return numFilas;
 
     }
+    
+    public int updatePlazaAbonadoBaja(String numPlaza) throws SQLException {
+
+        int numFilas = 0;
+        String sql = "update plaza set estado = 'Libre' where numeroPlaza=?";
+
+        // Instanciamos el objeto PreparedStatement para inserción
+        // de datos. Sentencia parametrizada
+        try (PreparedStatement prest = con.prepareStatement(sql)) {
+
+            // Establecemos los parámetros de la sentencia
+            prest.setString(1, numPlaza);
+
+            numFilas = prest.executeUpdate();
+        }
+        return numFilas;
+
+    }
 
     //Método para borrar todas las plazas de la base de datos
     @Override //Sobrescrito
@@ -307,6 +325,24 @@ public class PlazaDAO implements IPlaza {
 
         // almaceno resultado de consulta en ResultSet
         ResultSet rs = st.executeQuery("SELECT COUNT(numeroPlaza) FROM plaza WHERE estado = 'libre' and tipoPlaza='Caravana'");
+        // chequeo que el result set no sea vacío, moviendo el cursor a la 
+        // primer fila. (El cursor inicia antes de la primer fila)
+        if (rs.next()) {
+            //Si hay resultados obtengo el valor. 
+            n = rs.getString(1);
+        }
+        // libero recursos
+
+        return n;
+    }
+    
+    //Método para comprobar si está libre una plaza de vehiculos tipo turismos
+    public String plazaLibre() throws SQLException {
+        String n = "0";
+        Statement st = con.createStatement();
+
+        // almaceno resultado de consulta en ResultSet
+        ResultSet rs = st.executeQuery("SELECT COUNT(numeroPlaza) FROM plaza");
         // chequeo que el result set no sea vacío, moviendo el cursor a la 
         // primer fila. (El cursor inicia antes de la primer fila)
         if (rs.next()) {
@@ -555,6 +591,7 @@ public class PlazaDAO implements IPlaza {
         } else {
 
             String sql = "update plaza set estado = 'libre' where numeroPlaza=?";
+            String sql2 = "delete from vehiculo where matricula = ?"; 
 
             // Instanciamos el objeto PreparedStatement para inserción
             // de datos. Sentencia parametrizada
@@ -562,6 +599,16 @@ public class PlazaDAO implements IPlaza {
 
                 // Establecemos los parámetros de la sentencia
                 prest.setString(1, numPlaza);
+
+                prest.executeUpdate();
+            }
+            
+            // Instanciamos el objeto PreparedStatement para inserción
+            // de datos. Sentencia parametrizada
+            try (PreparedStatement prest = con.prepareStatement(sql2)) {
+
+                // Establecemos los parámetros de la sentencia
+                prest.setString(1, matricula);
 
                 prest.executeUpdate();
             }
