@@ -162,6 +162,7 @@ public class Parking {
                         System.out.println("2-Restaurar una copia de seguridad");
                         System.out.println("3-Mostrar el estado del parking");
                         System.out.println("4-Facturacion entre 2 fechas");
+                        System.out.println("5-Mostrar caducidad de los abonados en los próximos 10 días");
                         int seleccionAdmin = teclado.nextInt();
 
                         switch (seleccionAdmin) {
@@ -182,6 +183,10 @@ public class Parking {
                             case 4:
                                 double precio = daoTickets.calcularFacturacion();
                                 System.out.println("Total de la facturación: " + precio + "€");
+                                break;
+                            case 5:
+                                System.out.println("Mostrar el dni de los abonados que van a caducar en los proximos 10 dias");
+                                daoPersona.comprobarCaducidad();
                                 break;
                         }
                         break;
